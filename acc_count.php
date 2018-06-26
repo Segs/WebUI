@@ -17,4 +17,5 @@
    $mysqli->select_db($chardb);
    $ret->numchar = $mysqli->query("select count(*) from characters")->fetch_array()[0];
    echo json_encode($ret);
+   $mysqli->close();
 ?>
