@@ -41,20 +41,21 @@
     if ($mysqli->connect_errno) {
       $retval->msg = "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
       $retval->value = 1;
+      $mysqli->close();
       return $retval;
     }
     if($stmt = $mysqli->prepare("INSERT INTO accounts(username, passw, salt) VALUES(?, ?, ?)")){
       $stmt->bind_param('sss', $username, $hashed_pass_bytearr, $sample_salt);
       if(!$stmt->execute()){
         $retval->msg = "User creation failed! " . $mysqli->errno;
-	$retval->value = 1;
-        return $retval;
+        $retval->value = 1;
       }
       else{
-	$retval->msg = "User succesfully created!";
-	$retval->value = 0;
-        return $retval;
+        $retval->msg = "User succesfully created!";
+        $retval->value = 0;
       }
+      $mysqli->close();
+      return $retval;
     }
   }
 
@@ -65,6 +66,7 @@
     if ($mysqli->connect_errno) {
       echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
     }
+    $mysqli->close();
   }
 
 ?>
