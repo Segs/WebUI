@@ -6,6 +6,7 @@
  * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
  */
 
+   session_start();
    class retdata{
      public $numaccs = 0;
      public $numchar = 0;
