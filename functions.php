@@ -26,7 +26,7 @@
   class RET_TYPE{
     public $retmsg = "";
     public $msg = "";
-    public $value = "0";
+    public $value = "1";
   }
 
   function create_user($username, $pwd){

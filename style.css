@@ -15,22 +15,6 @@ body{
     background-color: #efefef;
 }
 
-#leftmenu{
-    position: relative;
-    float: left;
-    clear: left;
-    width: 20%;
-    height: 40em;
-    background-color: #003663;
-}
-
-#leftmenu img{
-    width: 60%;
-    margin-left: 20%;
-    margin-bottom: 40px;
-    margin-top: 5px;
-}
-
 #headmenu{
     float: left;
     width: 80%;
@@ -76,10 +60,49 @@ body{
     width: 0px;
     height: 0px;
     border-style: solid;
-    border-width: 0 30px 30px 30px;
+    border-width: 0 1.5em 1.5em 1.5em;
     border-color: transparent transparent #f0f0f0 transparent;
     position: absolute; 
     bottom: 0;
+}
+
+#leftbar{
+    position: relative;
+    float: left;
+    clear: left;
+    width: 20%;
+    height: 40em;
+    background-color: #003663;
+}
+
+#leftbar img{
+    width: 60%;
+    margin-left: 20%;
+    margin-bottom: 40px;
+    margin-top: 5px;
+}
+
+.hidden{
+    display: none;
+}
+
+.shown{
+    display: block;
+}
+
+#loginform input[type="text"],input[type="password"]{
+    width: 60%;
+    margin-top:20px;
+    margin-left:20%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+#loginform input[type="submit"]{
+    margin-top:20px;
+    width: 30%;
+    margin-left: 35%;
 }
 
 .leftchoice{
@@ -113,6 +136,7 @@ body{
 }
 
 .contained{
+    display: none;
     padding-left: 2em;
 }
 
