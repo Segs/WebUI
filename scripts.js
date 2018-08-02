@@ -229,7 +229,7 @@ doLogin = function(){
               return myBlob.json();
           }).then(function(result){
               try{
-                  window.location.replace("/");
+                  window.location.replace(window.location.pathname);
               }
               catch(e){
                   window.location.reload();
@@ -245,7 +245,7 @@ signOut = function(){
               return result;
           }).then(function(data){
               try{
-                  window.location.replace("/");
+                  window.location.replace(window.location.pathname);
               }
               catch(e){
                   window.location.reload();
