@@ -111,7 +111,7 @@
         </div>
         <?php } ?>
         <div id="reportbutton">
-          Report Bugs!
+          <a href="https://github.com/Segs/WebUI/issues">Report Bugs!</a>
         </div>
       </div>
       <div id="headmenu">
