@@ -110,9 +110,11 @@
           </div>
         </div>
         <?php } ?>
-        <div id="reportbutton">
-          <a href="https://github.com/Segs/WebUI/issues">Report Bugs!</a>
+        <a href="https://github.com/Segs/WebUI/issues">
+	<div id="reportbutton">
+	  Report Bugs!
         </div>
+	</a>
       </div>
       <div id="headmenu">
         <div class="item selected" id="dashboard" onClick="goHome();">
