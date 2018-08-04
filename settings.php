@@ -6,7 +6,7 @@
  * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
  */
  
-  $dbhost = "127.0.0.1";
+  $dbhost = "localhost";
   $dbuser = "segsadmin";
   $dbpass = "segs123";
   $accdb = "segs";
