@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <HTML>
+
 <head>
   <meta charset="utf-8" />
   <title>SEGS RPC / WebSocket Test</title>
 
-<style>
-.button {
+  <style>
+    .button {
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
@@ -29,92 +30,90 @@
 }
 
 </style>
+</head>
 
 <body>
-    <h2>SEGS RPC / WebSocket Test</h2>
-    <p>Run AuthServer, then click 'Connect' to establish connection, then click service. Automatically disconnected after, so will need to click 'Connect' again.</p>
-    <button type="button" id="connect" class="button">Connect</button></br>
-    <table id="button_table"></table></br>
-    <div id="output"></div>
+  <h2>SEGS RPC / WebSocket Test</h2>
+  <p>Run AuthServer, then click 'Connect' to establish connection, then click service. Automatically disconnected after, so will need to click 'Connect' again.</p>
+  <button type="button" id="connect" class="button">Connect</button></br>
+  <table id="button_table"></table></br>
+  <div id="output"></div>
 
 </body>
 
-  <script language="javascript" type="text/javascript">
-
+<script language="javascript" type="text/javascript">
   var wsUri = "ws://127.0.0.1:6001";
   var output;
   var available_services = ["helloServer", "getVersion"]; // To add a new service, add to this list.
 
-  function add_services()
-  {
+  function add_services() {
     var table = document.getElementById("button_table");
     var i;
     for (i = 0; i < available_services.length; i++) {
-        var row = table.insertRow(0);
-        var cell1 = row.insertCell(0);
-        var pre = document.createElement("button");
-        pre.setAttribute("id", available_services[i]);
-        pre.setAttribute("class", "service_button");
-        pre.addEventListener('click', function() {
+      var row = table.insertRow(0);
+      var cell1 = row.insertCell(0);
+      var pre = document.createElement("button");
+      pre.setAttribute("id", available_services[i]);
+      pre.setAttribute("class", "service_button");
+      pre.addEventListener('click', function() {
         makeCall(this.id);
-        }, false);
-        var buttonText = available_services[i];
-        pre.innerHTML = buttonText;
-        cell1.appendChild(pre);
+      }, false);
+      var buttonText = available_services[i];
+      pre.innerHTML = buttonText;
+      cell1.appendChild(pre);
     }
   }
 
-  function init()
-  {
+  function init() {
     output = document.getElementById("output");
     openWebSocket();
   }
 
-  function openWebSocket()
-  {
+  function openWebSocket() {
     websocket = new WebSocket(wsUri);
-    websocket.onopen = function(evt) { onOpen(evt) };
-    websocket.onclose = function(evt) { onClose(evt) };
-    websocket.onmessage = function(evt) { onMessage(evt) };
-    websocket.onerror = function(evt) { onError(evt) };
+    websocket.onopen = function(evt) {
+      onOpen(evt)
+    };
+    websocket.onclose = function(evt) {
+      onClose(evt)
+    };
+    websocket.onmessage = function(evt) {
+      onMessage(evt)
+    };
+    websocket.onerror = function(evt) {
+      onError(evt)
+    };
   }
 
-  function onOpen(evt)
-  {
+  function onOpen(evt) {
     writeToScreen("CONNECTED TO: " + wsUri);
   }
 
-  function makeCall(message)
-  {
+  function makeCall(message) {
     doSend(message);
   }
 
-  function onClose(evt)
-  {
+  function onClose(evt) {
     writeToScreen("DISCONNECTED");
   }
 
-  function onMessage(evt)
-  {
-    writeToScreen('<span style="color: blue;">SERVER RESPONSE: ' + evt.data+'</span>');
+  function onMessage(evt) {
+    writeToScreen('<span style="color: blue;">SERVER RESPONSE: ' + evt.data + '</span>');
     processResponse(evt.data);
   }
 
-  function onError(evt)
-  {
+  function onError(evt) {
     writeToScreen('<span style="color: red;">SERVER ERROR:</span> ' + evt.data);
   }
 
-  function processResponse(response)
-  {
+  function processResponse(response) {
     var obj = JSON.parse(response);
     result = obj.result;
     writeToScreen('<span style="color: green;">PROCESSED RESPONSE:</span> ' + result);
     websocket.close();
   }
 
-  function doSend(message)
-  {
+  function doSend(message) {
     var timestamp = new Date().getTime();
     var request_payload = JSON.stringify({
       jsonrpc: "2.0",
@@ -126,19 +125,17 @@
     writeToScreen("SENT: " + request_payload);
   }
 
-  function writeToScreen(message)
-  {
+  function writeToScreen(message) {
     var pre = document.createElement("p");
     pre.style.wordWrap = "break-word";
     pre.innerHTML = message;
     output.appendChild(pre);
   }
 
-document.addEventListener("load", add_services(), false);
-document.getElementById("connect").onclick = function() {
+  document.addEventListener("load", add_services(), false);
+  document.getElementById("connect").onclick = function() {
     init();
-};
+  };
+</script>
 
-  </script>
-</head>
 </HTML>
