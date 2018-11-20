@@ -6,24 +6,24 @@
  * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
  */
  
-	// Server Settings
+    // Server Settings
     $site_title     = "SEGS";
     $company_name   = "SEGS";
 
 
     // Database Settings
-	$dbhost = "localhost";
-	$dbuser = "segsadmin";
-	$dbpass = "segs123";
-	$accdb = "segs";
-	$chardb = "segs_game";
+    $dbhost         = "localhost";
+    $dbuser         = "segsadmin";
+    $dbpass         = "segs123";
+    $accdb          = "segs";
+    $chardb         = "segs_game";
 
-	// WebSocket connection
+    // WebSocket connection
     $ws_target      = "ws://localhost/";
     $ws_port        = 6001;
     $ws_use_ssl     = false;
 
-	// Date and Time
-	$timezone 		= "UTC";
+    // Date and Time
+    $timezone       = "UTC";
 
 ?>
