@@ -1,6 +1,12 @@
-#SEGS WebUI
+#SEGS WebUI Licenses
 
-##BSD 3-Clause License
+[SEGS WebUI](#segs-webui)  
+[Other Licenses](#other-licenses)  
+
+
+
+##SEGS WebUI
+###BSD 3-Clause License
 
 
 Copyright (c) 2018, SEGS  
