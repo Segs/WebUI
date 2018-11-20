@@ -1,8 +1,12 @@
 <?php
+    /*
+     * SEGS - Super Entity Game Server
+     * http://www.segs.io/
+     * Copyright (c) 2006 - 2018 SEGS Team (see AUTHORS.md)
+     * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
+     */
+
     session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
     require_once '../config/config.php';
     if (isset($_GET['page'])):
@@ -11,7 +15,6 @@ error_reporting(E_ALL);
         $page = "dashboard";
     endif;
     setcookie("CurrentPage", $page);
-    //ini_set('include_path','./includes/'); //  . ini_get('include_path'));
 
 ?>
 
@@ -166,7 +169,7 @@ error_reporting(E_ALL);
         <script type="text/javascript" src="assets/js/material-dashboard.min.js?v=2.1.0"></script>
         <!-- Material Dashboard DEMO methods, don't include it in your project! -->
         <script type="text/javascript" src="assets/js/plugins/imageMapResizer.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.7.0/bootstrap-lightbox.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.7.0/bootstrap-lightbox.min.js"></script>
         <script type="text/javascript" src="assets/js/segs.js"></script>
         <script type="text/javascript" src="//cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.min.js" charset="utf-8"></script>
     </body>

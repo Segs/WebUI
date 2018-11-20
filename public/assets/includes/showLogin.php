@@ -1,6 +1,11 @@
-<?php if(!empty($_POST)){ ?>
-
-<?php } ?>
+<?php
+    /*
+     * SEGS - Super Entity Game Server
+     * http://www.segs.io/
+     * Copyright (c) 2006 - 2018 SEGS Team (see AUTHORS.md)
+     * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
+     */
+?>
 <div class="modal-dialog" role="document">
     <form id="modal_form_login" novalidate="novalidate" method="post" onsubmit="return doLogin();">
         <div class="modal-content">
@@ -18,15 +23,6 @@
                         <input type="text" id="modal_login_username" name="modal_login_username" class="form-control" placeholder="Enter your username" autocomplete="username" />
                     </div>
                 </div>
-                <!--
-                <div class="form-group">
-                    <label for="modal_login_email">Email address</label>
-                    <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                        <input type="email" id="modal_login_email" name="modal_login_email" class="form-control" placeholder="Enter your email" />
-                    </div>
-                    <small class="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                -->
                 <div class="form-group">
                     <label for="modal_login_password">Password</label>
                     <div class="input-group">

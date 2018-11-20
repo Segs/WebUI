@@ -1,57 +1,60 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+    /*
+     * SEGS - Super Entity Game Server
+     * http://www.segs.io/
+     * Copyright (c) 2006 - 2018 SEGS Team (see AUTHORS.md)
+     * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
+     */
 
-require_once '../config/config.php';
-require_once '../vendor/autoload.php';
-require_once '../vendor/tivoka/tivoka/include.php';
+    require_once '../config/config.php';
+    require_once '../vendor/autoload.php';
+    require_once '../vendor/tivoka/tivoka/include.php';
 
-try{
-    $client = Tivoka\Client::connect($ws_target)->getNativeInterface();
     try{
-        // verify server online
-        $client->ping();
-        $server_online = $client->last_request->result;
-        $server_status = "ONLINE";
-        $server_status_color = "success";
-        // get server version
-        try {
-            $client->getVersion();
-            $server_version = $client->last_request->result;
-            $server_version_color = "success";
+        $client = Tivoka\Client::connect($ws_target)->getNativeInterface();
+        try{
+            // verify server online
+            $client->ping();
+            $server_online = $client->last_request->result;
+            $server_status = "ONLINE";
+            $server_status_color = "success";
+            // get server version
+            try {
+                $client->getVersion();
+                $server_version = $client->last_request->result;
+                $server_version_color = "success";
+            } catch(Exception $e) {
+                $server_version = "NO DATA";
+                $server_version_color = "danger";
+            }
+            // get server start time
+            try {
+                require_once '../src/dateTime.php';
+                $client->getStartTime();
+                $server_uptime = (int)$client->last_request->result;
+                $server_uptime = dateDiff(time(), $server_uptime,6,1);
+                $server_uptime_color = "success";
+            } catch(Exception $e) {
+                $server_uptime = "NO DATA";
+                $server_uptime_color = "danger";
+            }
         } catch(Exception $e) {
+            $server_status = "OFFLINE";
+            $server_status_color = "danger";
             $server_version = "NO DATA";
             $server_version_color = "danger";
-        }
-        // get server start time
-        try {
-            require_once '../src/dateTime.php';
-            $client->getStartTime();
-            $server_uptime = (int)$client->last_request->result;
-            $server_uptime = dateDiff(time(), $server_uptime,6,1);
-            $server_uptime_color = "success";
-        } catch(Exception $e) {
             $server_uptime = "NO DATA";
             $server_uptime_color = "danger";
         }
-    } catch(Exception $e) {
+    }
+    catch(Exception $e) {
         $server_status = "OFFLINE";
         $server_status_color = "danger";
-        $server_version = "NO DATA";
-        $server_version_color = "danger";
         $server_uptime = "NO DATA";
         $server_uptime_color = "danger";
+        $server_version = "NO DATA";
+        $server_version_color = "danger";
     }
-}
-catch(Exception $e) {
-    $server_status = "OFFLINE";
-    $server_status_color = "danger";
-    $server_uptime = "NO DATA";
-    $server_uptime_color = "danger";
-    $server_version = "NO DATA";
-    $server_version_color = "danger";
-}
 
 ?>
     <div class="content">
