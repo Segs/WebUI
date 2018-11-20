@@ -1,7 +1,9 @@
-BSD 3-Clause License
-====================
+#SEGS WebUI
 
-Copyright (c) 2018, SEGS
+##BSD 3-Clause License
+
+
+Copyright (c) 2018, SEGS  
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,3 +25,13 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+##Other Licenses
+
+###MIT License
+Parts of this project have been included under the MIT license.
+
+###Material Dashboard by Creative Tim
+Homepage: https://www.creative-tim.com/product/material-dashboard  
+License: https://github.com/timcreative/freebies/blob/master/LICENSE.md  
+
