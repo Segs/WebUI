@@ -1,0 +1,37 @@
+.image_map{
+    fill: #0000ff;
+    fill-opacity: 0.1;
+    stroke: #3f3fff;
+    stroke-width: .15em;
+    stroke-opacity: .5;
+}
+
+.image_map:hover{
+    fill: #00ff00;
+    fill-opacity: 0.2;
+    stroke: #3fff3f;
+    stroke-width: .15em;
+    stroke-opacity: 1;
+}
+
+.hazard:hover{
+    fill: #ffff00;
+    fill-opacity: 0.2;
+    stroke: #ffff3f;
+    stroke-width: .15em;
+    stroke-opacity: 1;
+}
+
+.trial:hover{
+    fill: #ff0000;
+    fill-opacity: 0.2;
+    stroke: #ff3f3f;
+    stroke-width: .15em;
+    stroke-opacity: 1;
+}
+
+#modal-content{
+    /*
+    display: none;
+     */
+}
