@@ -47,7 +47,7 @@
                     Tip 2: you can also add an image using data-image tag
                 -->
                 <div class="logo">
-                    <a href="http://www.verybadpanda.com" class="simple-text logo-normal"><?php echo $company_name; ?></a>
+                    <a href="{$company_url}" class="simple-text logo-normal"><?php echo $company_name; ?></a>
                 </div>
                 <div class="sidebar-wrapper">
                     <?php require_once 'assets/includes/menuLeft.php'; ?>
