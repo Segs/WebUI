@@ -8,8 +8,10 @@
  
     // Server Settings
     $site_title     = "SEGS";
-    $company_name   = "SEGS";
-
+    $site_name      = "SEGS";
+    $site_url       = "https://segs.io";
+    $site_logo      = "https://github.com/Segs/Segs/raw/develop/docs/segs-medallion-med.png";
+    $site_admin     = "webmaster@example.com";
 
     // Database Settings
     $dbhost         = "localhost";
