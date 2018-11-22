@@ -38,9 +38,8 @@
             if(!$return_value->value){
                 $return_value->return_message = "Account for " . $loginName . " successfully created.<br>\n";
                 $return_value->return_message .= "Welcome, hero!";
-            }
-            else{
-                $return_value->return_message = "Something went wrong. Contact dracc, please.";
+            } else {
+                $return_value->return_message = "Something went wrong. Contact {$site_admin}, please.";
             }
         }
     }
