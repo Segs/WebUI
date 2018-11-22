@@ -12,6 +12,12 @@
     $site_url       = "https://segs.io";
     $site_logo      = "https://github.com/Segs/Segs/raw/develop/docs/segs-medallion-med.png";
     $site_admin     = "webmaster@example.com";
+    /*
+        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+        Tip 2: you can also add an image using data-image tag
+    */
+    $site_color         = "green";
+    $site_navbar_title  = "SEGS WebUI";
 
     // Database Settings
     $dbhost         = "localhost";
