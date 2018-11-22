@@ -41,13 +41,15 @@
             <div id="modal-content" class="modal fade" tabindex="-1" role="dialog">
                 <?php require_once 'assets/includes/showLogin.php'; ?>
             </div>
-            <div class="sidebar" data-color="purple" data-background-color="white" data-image="">
+            <div class="sidebar" data-color="<?php echo $site_color; ?>" data-background-color="white" data-image="">
                 <!--
                     Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
                     Tip 2: you can also add an image using data-image tag
                 -->
                 <div class="logo">
-                    <a href="{$company_url}" class="simple-text logo-normal"><?php echo $company_name; ?></a>
+                    <a href="<?php echo $site_url; ?>" class="simple-text logo-normal" target="_blank">
+                        <img class="img-fluid" src="<?php echo $site_logo ; ?>" alt="<?php echo $site_name; ?>">
+                    </a>
                 </div>
                 <div class="sidebar-wrapper">
                     <?php require_once 'assets/includes/menuLeft.php'; ?>
@@ -78,12 +80,6 @@
                             </form>
                             <ul class="navbar-nav">
                             <?php if(isset($_SESSION['authenticated'])) { ?>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#pablo">
-                                        <i class="material-icons">dashboard</i>
-                                        <p class="d-lg-none d-md-block">Stats</p>
-                                    </a>
-                                </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="material-icons">notifications</i>
@@ -91,9 +87,9 @@
                                         <p class="d-lg-none d-md-block">Some Actions</p>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Mike John responded to your email</a>
-                                        <a class="dropdown-item" href="#">You have 5 new tasks</a>
-                                        <a class="dropdown-item" href="#">You're now friend with Andrew</a>
+                                        <a class="dropdown-item" href="#">Notifications are not implemented.</a>
+                                        <a class="dropdown-item" href="#">These are currently static.</a>
+                                        <a class="dropdown-item" href="#">SEGS Server has been updated to version 0.6.1 Outbreak</a>
                                         <a class="dropdown-item" href="#">Another Notification</a>
                                         <a class="dropdown-item" href="#">Another One</a>
                                     </div>
