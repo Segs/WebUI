@@ -51,7 +51,7 @@
                     <a class="btn btn-dark " href="#login">Need to login?</a>
                     -->
                     <a class="nav-link" href="#modal-login" data-toggle="modal" data-target="#modal-login" data-dismiss="modal">
-                        <i class="fa fa-sign-in"></i>Need to register?
+                        <i class="fa fa-sign-in"></i>Need to login?
                     </a>
                 </div>
             </div>
