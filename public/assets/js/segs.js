@@ -81,7 +81,7 @@ function doSignup(){
     var formdata = document.getElementById('signupform');
     var resultbox = document.getElementById('signupFail');
     var bodycont = "user=" + formdata.username.value + "&pass=" + formdata.password.value;
-    fetch("/WebUI2/src/usercreate.php",
+    fetch("assets/includes/createUser.php",
           {method: 'POST',
            headers: {
                'charset': 'utf-8',
