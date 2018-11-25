@@ -41,7 +41,7 @@
                     <a class="btn btn-info" href="#forgot">Forgot your password?</a>
                     <a class="btn btn-dark " href="#register">Need to register?</a>
                      -->
-                    <a class="nav-link" href="#modal-create" data-toggle="modal" data-target="#modal-create">
+                    <a class="nav-link" href="#modal-create" data-toggle="modal" data-target="#modal-create" data-dismiss="modal">
                         <i class="fa fa-sign-in"></i>Need to register?
                     </a>
 
