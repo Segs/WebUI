@@ -37,7 +37,7 @@
     stroke-opacity: 1;
 }
 
-#modal-content{
+#modal-login, #modal-create {
     /*
     display: none;
      */

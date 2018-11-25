@@ -38,7 +38,7 @@
 
     <body class="">
         <div class="wrapper ">
-            <div id="modal-content" class="modal fade" tabindex="-1" role="dialog">
+            <div id="modal-login" class="modal fade" tabindex="-1" role="dialog">
                 <?php require_once 'assets/includes/showLogin.php'; ?>
             </div>
             <div id="modal-create" class="modal fade" tabindex="-1" role="dialog">

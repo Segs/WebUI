@@ -32,7 +32,7 @@ function updateMain(m_pageName) {
 function updateModal(m_pageName) {
     var m_include_file;
     m_include_file = 'assets/includes/' + m_pageName + '.php'
-    makeRequest('modal-content', m_include_file, showContents);
+    makeRequest('modal-login', m_include_file, showContents);
 }
 
 function doLogin(){
