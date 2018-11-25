@@ -41,6 +41,9 @@
             <div id="modal-content" class="modal fade" tabindex="-1" role="dialog">
                 <?php require_once 'assets/includes/showLogin.php'; ?>
             </div>
+            <div id="modal-create" class="modal fade" tabindex="-1" role="dialog">
+                <?php require_once 'assets/includes/showCreate.php'; ?>
+            </div>
             <div class="sidebar" data-color="<?php echo $site_color; ?>" data-background-color="white" data-image="">
                 <!--
                     Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"

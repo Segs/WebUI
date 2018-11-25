@@ -77,10 +77,10 @@ function doLogout(){
     return true;
 }
 
-function doSignup(){
-    var formdata = document.getElementById('signupform');
+function doCreate(){
+    var formdata = document.getElementById('modal_form_create');
     var resultbox = document.getElementById('signupFail');
-    var bodycont = "user=" + formdata.username.value + "&pass=" + formdata.password.value;
+    var bodycont = "modal_create_username=" + formdata.modal_create_username.value + "&modal_create_password=" + formdata.modal_create_password.value;
     fetch("assets/includes/createUser.php",
           {method: 'POST',
            headers: {
