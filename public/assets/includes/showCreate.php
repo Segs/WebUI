@@ -20,7 +20,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="text-addon1"><i class="fa fa-user-circle"></i></span>
                         </div>
-                        <input type="text" id="modal_create_username" name="modal_create_username" class="form-control" placeholder="Enter your username" autocomplete="username" />
+                        <input type="text" id="modal_create_username" name="modal_create_username" class="form-control" placeholder="Enter a username" autocomplete="username" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -29,7 +29,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="text-addon2"><i class="fa fa-unlock-alt"></i></span>
                         </div>
-                        <input type="password" id="modal_create_password" name="modal_create_password" class="form-control" placeholder="Create your password" autocomplete="new-password" />
+                        <input type="password" id="modal_create_password" name="modal_create_password" class="form-control" placeholder="Enter a password" autocomplete="new-password" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -38,12 +38,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="text-addon3"><i class="fa fa-unlock-alt"></i></span>
                         </div>
-                        <input type="password" id="modal_create_verify" name="modal_create_verify" class="form-control" placeholder="Verify your password" autocomplete="new-password" />
+                        <input type="password" id="modal_create_verify" name="modal_create_verify" class="form-control" placeholder="Verify password" autocomplete="new-password" />
                     </div>
-                </div>
-                <div class="custom-control">
-                    <input type="checkbox" class="custom-control-input" value="" id="modal_login_remember" />
-                    <label for="modal_login_remember" class="custom-control-label">Remember me</label>
                 </div>
                 <div class="text-center">
                     <!--
