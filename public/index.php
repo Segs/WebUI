@@ -111,7 +111,7 @@
 
                             <?php } else { ?>
                                 <li class="nav-item ">
-                                    <a class="nav-link" href="#modal-content" data-toggle="modal" data-target="#modal-content">
+                                    <a class="nav-link" href="#modal-login" data-toggle="modal" data-target="#modal-login">
                                         <i class="fa fa-sign-in"></i>Login or Sign Up
                                     </a>
                                 </li>
