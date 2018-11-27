@@ -10,7 +10,7 @@
     <form id="modal_form_create" novalidate="novalidate" method="post" onsubmit="return doCreate();">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-lock mr-1"></i>LOGIN</h5>
+                <h5 class="modal-title"><i class="fa fa-unlock mr-1"></i>REGISTER</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
             </div>
             <div class="modal-body">
