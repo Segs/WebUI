@@ -10,7 +10,7 @@
     <form id="modal_form_login" novalidate="novalidate" method="post" onsubmit="return doLogin();">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-lock mr-1"></i>LOGIN</h5>
+                <h5 class="modal-title"><i class="fas fa-lock mr-1"></i>LOGIN</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
             </div>
             <div class="modal-body">
@@ -18,7 +18,7 @@
                     <label for="modal_login_username">Username</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="text-addon1"><i class="fa fa-user-circle"></i></span>
+                            <span class="input-group-text" id="text-addon1"><i class="fas fa-user-circle"></i></span>
                         </div>
                         <input type="text" id="modal_login_username" name="modal_login_username" class="form-control" placeholder="Enter your username" autocomplete="username" />
                     </div>
@@ -27,7 +27,7 @@
                     <label for="modal_login_password">Password</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="text-addon2"><i class="fa fa-unlock-alt"></i></span>
+                            <span class="input-group-text" id="text-addon2"><i class="fas fa-unlock-alt"></i></span>
                         </div>
                         <input type="password" id="modal_login_password" name="modal_login_password" class="form-control" placeholder="Enter your password" autocomplete="current-password" />
                     </div>

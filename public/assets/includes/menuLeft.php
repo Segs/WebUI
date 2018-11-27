@@ -15,7 +15,7 @@
         </li>
         <li id="menu_zones" class="nav-item ">
             <a class="nav-link" href="?page=zones">
-                <i class="fa fa-map"></i>
+                <i class="fas fa-map"></i>
                 <p>Zone Switcher</p>
             </a>
         </li>

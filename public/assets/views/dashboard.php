@@ -63,7 +63,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="card card-stats">
                         <div class="card-header card-header-<?php echo $server_status_color; ?> card-header-icon">
-                            <div class="card-icon"><i class="fa fa-heartbeat"></i></div>
+                            <div class="card-icon"><i class="fas fa-heartbeat"></i></div>
                             <p class="card-category">Server Status</p>
                             <h4 class="card-title"><?php echo $server_status; ?></h4>
                         </div>
@@ -87,7 +87,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="card card-stats">
                     <div class="card-header card-header-<?php echo $server_version_color; ?> card-header-icon">
-                        <div class="card-icon"><i class="fa fa-code"></i></div>
+                        <div class="card-icon"><i class="fas fa-code"></i></div>
                         <p class="card-category">Server Version</p>
                         <h4 class="card-title"><?php echo $server_version; ?></h4>
                     </div>
@@ -101,7 +101,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="card card-stats">
                     <div class="card-header card-header-info card-header-icon">
-                        <div class="card-icon"><i class="fa fa-user-circle-o"></i></div>
+                        <div class="card-icon"><i class="fas fa-user-astronaut"></i></div>
                         <p class="card-category">Players Online</p>
                         <h4 class="card-title">23</h4>
                     </div>
@@ -113,7 +113,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="card card-stats">
                     <div class="card-header card-header-info card-header-icon">
-                        <div class="card-icon"><i class="fa fa-users"></i></div>
+                        <div class="card-icon"><i class="fas fa-users"></i></div>
                         <p class="card-category">Unique Users</p>
                         <h4 class="card-title"><div id="num_accts"></div></h4>
                     </div>
@@ -125,7 +125,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="card card-stats">
                         <div class="card-header card-header-info card-header-icon">
-                            <div class="card-icon"><i class="fa fa-user-secret"></i></div>
+                            <div class="card-icon"><i class="fas fa-user-secret"></i></div>
                             <p class="card-category">Characters</p>
                             <h4 class="card-title"><div id="num_chars"></div></h4>
                         </div>

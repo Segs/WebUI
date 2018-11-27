@@ -10,7 +10,7 @@
     <form id="modal_form_create" novalidate="novalidate" method="post" onsubmit="return doCreate();">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-unlock mr-1"></i>REGISTER</h5>
+                <h5 class="modal-title"><i class="fas fa-edit mr-1"></i>REGISTER</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
             </div>
             <div class="modal-body">
@@ -18,7 +18,7 @@
                     <label for="modal_create_username">Username</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="text-addon1"><i class="fa fa-user-circle"></i></span>
+                            <span class="input-group-text" id="text-addon1"><i class="fas fa-user-circle"></i></span>
                         </div>
                         <input type="text" id="modal_create_username" name="modal_create_username" class="form-control" placeholder="Enter a username" autocomplete="username" />
                     </div>
@@ -27,7 +27,7 @@
                     <label for="modal_create_password">Password</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="text-addon2"><i class="fa fa-unlock-alt"></i></span>
+                            <span class="input-group-text" id="text-addon2"><i class="fas fa-unlock-alt"></i></span>
                         </div>
                         <input type="password" id="modal_create_password" name="modal_create_password" class="form-control" placeholder="Enter a password" autocomplete="new-password" />
                     </div>
@@ -36,7 +36,7 @@
                     <label for="modal_create_verify">Password</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="text-addon3"><i class="fa fa-unlock-alt"></i></span>
+                            <span class="input-group-text" id="text-addon3"><i class="fas fa-unlock-alt"></i></span>
                         </div>
                         <input type="password" id="modal_create_verify" name="modal_create_verify" class="form-control" placeholder="Verify password" autocomplete="new-password" />
                     </div>

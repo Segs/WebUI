@@ -29,7 +29,12 @@
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <!-- Fonts and icons       -->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+
+        <!-- Font Awesome          -->
+        <!--
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+        -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         <!-- CSS Files             -->
         <link href="assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.7.0/bootstrap-lightbox.css" integrity="sha256-iSJ+O7SdfdjO7VYs5/SlJm9JWfnJSkqTFjI7xQV3CvE=" crossorigin="anonymous" />
@@ -105,14 +110,14 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#logout" onclick="doLogout();">
-                                        <i class="fa fa-sign-out"></i>Log Out
+                                        <i class="fas fa-sign-out-alt"></i> Log Out
                                     </a>
                                 </li>
 
                             <?php } else { ?>
                                 <li class="nav-item ">
                                     <a class="nav-link" href="#modal-login" data-toggle="modal" data-target="#modal-login">
-                                        <i class="fa fa-sign-in"></i>Login or Sign Up
+                                        <i class="fas fa-sign-in-alt"></i> Login or Sign Up
                                     </a>
                                 </li>
                             <?php } ?>
@@ -131,22 +136,20 @@
                         <nav class="float-left">
                             <ul>
                                 <li>
-                                    <a href="https://www.creative-tim.com">Creative Tim</a>
+                                    <a href="https://segs.io"><i class="fas fa-home"></i> SEGS Home</a>
                                 </li>
                                 <li>
-                                    <a href="https://creative-tim.com/presentation">About Us</a>
+                                    <a href="https://github.com/segs"><i class="fab fa-github"></i> SEGS on Github</a>
                                 </li>
                                 <li>
-                                    <a href="http://blog.creative-tim.com">Blog</a>
+                                    <a href="https://discord.segs.io/"><i class="fab fa-discord"></i> SEGS on Discord</a>
                                 </li>
                                 <li>
-                                    <a href="https://www.creative-tim.com/license">Licenses</a>
+                                    <a href="https://github.com/Segs/Segs/blob/develop/LICENSE.md"><i class="fas fa-handshake"></i> Licenses</a>
                                 </li>
                             </ul>
                         </nav>
-                        <div class="copyright float-right">&copy;
-                            <script>document.write(new Date().getFullYear())</script>, made with <i class="material-icons">favorite</i> by
-                            <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+                        <div class="copyright float-right">&copy; <?php echo strftime("%Y"); ?> <a href="https://segs.io" target="_blank">SEGS</a>, with help from <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>.
                         </div>
                     </div>
                 </footer>
