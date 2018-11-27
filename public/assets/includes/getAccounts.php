@@ -18,7 +18,8 @@
     $ret = new retdata();
     $ret->num_accts = $mysqli->query("select id from accounts")->num_rows;
     $mysqli->select_db($chardb);
-    $ret->num_chars = $mysqli->query("select count(*) from characters")->fetch_array()[0];
+    //$ret->num_chars = $mysqli->query("select count(*) from characters")->fetch_array()[0];
+    $ret->num_chars = $mysqli->query("select char_name from characters")->num_rows;
     echo json_encode($ret);
     $mysqli->close();
 
