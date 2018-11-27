@@ -11,7 +11,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-<?php echo $site_color; ?>">
                   <h4 class="card-title ">Switch Zones</h4>
                   <p class="card-category">Move a character.</p>
                 </div>
