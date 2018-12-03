@@ -36,18 +36,18 @@ function updateModal(m_pageName) {
 }
 
 function doLogin(){
-    var formdata = document.getElementById("modal_form_login");
-    var bodyvar = { 'username' : formdata.modal_login_username.value,
-                    'password' : formdata.modal_login_password.value};
-    console.log(formdata);
-    console.log(bodyvar);
+    let form_data = document.getElementById("modal_form_login");
+    let body_content = { 'username' : form_data.modal_login_username.value,
+                         'password' : form_data.modal_login_password.value};
+    console.log(form_data);
+    console.log(body_content);
     fetch("assets/includes/doLogin.php",
           {method: 'POST',
            headers:{
                'charset': 'utf-8',
                'content-type':'application/json'
            },
-           body: JSON.stringify(bodyvar)
+           body: JSON.stringify(body_content)
           }).then(function(myBlob){
               return myBlob.json();
           }).then(function(result){
@@ -78,25 +78,34 @@ function doLogout(){
 }
 
 function doCreate(){
-    var formdata = document.getElementById('modal_form_create');
-    var resultbox = document.getElementById('signupFail');
-    var bodycont = "modal_create_username=" + formdata.modal_create_username.value + "&modal_create_password=" + formdata.modal_create_password.value;
+    console.log("Start doCreate()");
+    let result_box = document.getElementById('alert_box');
+    let form_data = document.getElementById('modal_form_create');
+    if (form_data.modal_create_password !== form_data.modal_create_verify){
+        console.log("Passwords do not match.");
+        result_box.innerHTML = "<div class=\"alert alert-dismissible\">Password and verify password do not match.</div>";
+        $('#modal-info').modal();
+        return;
+    }
+    let body_content = { 'modal_create_username' : form_data.modal_create_username.value,
+                         'modal_create_password' : form_data.modal_create_password.value,
+                         'modal_create_verify'   : form_data.modal_create_verify.value};
     fetch("assets/includes/createUser.php",
           {method: 'POST',
            headers: {
                'charset': 'utf-8',
-               'content-type':'application/x-www-form-urlencoded'
+               'content-type':'application/json'
            },
-           body: bodycont
+           body: JSON.stringify(body_content)
           }).then(function(myBlob){
               return myBlob.json();
           }).then(function(data){
-              console.log(data);
-              resultbox.innerHTML=data.retmsg;});
+              result_box.innerHTML=data.$user_message;});
+    console.log("Finished doCreate()");
 }
 
 
-//function //ountsInfo(){
+//function AccountsInfo(){
 //    var elementAccts = document.getElementById("num_accts");
 //    var elementChars = document.getElementById("num_chars");
 //    fetch("/WebUI2/src/acc_count.php",

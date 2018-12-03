@@ -6,15 +6,16 @@
      * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
      */
 
-    session_start();
+session_start();
+//$config = parse_ini_file('../../../config/config.ini');
 
-    require_once '../config/config.php';
-    if (isset($_GET['page'])):
-        $page = $_GET["page"];
-    else:
-        $page = "dashboard";
-    endif;
-    setcookie("CurrentPage", $page);
+require_once '../config/config.php';
+if (isset($_GET['page'])):
+    $page = $_GET["page"];
+else:
+    $page = "dashboard";
+endif;
+setcookie("CurrentPage", $page);
 
 ?>
 
@@ -49,11 +50,10 @@
             <div id="modal-create" class="modal fade" tabindex="-1" role="dialog">
                 <?php require_once 'assets/includes/showCreate.php'; ?>
             </div>
+            <div id="modal-info" class="modal fade" tabindex="-1" role="dialog">
+                <div id="alert_box"></div>
+            </div>
             <div class="sidebar" data-color="<?php echo $site_color; ?>" data-background-color="white" data-image="">
-                <!--
-                    Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-                    Tip 2: you can also add an image using data-image tag
-                -->
                 <div class="logo">
                     <a href="<?php echo $site_url; ?>" class="simple-text logo-normal" target="_blank">
                         <img class="img-fluid" src="<?php echo $site_logo ; ?>" alt="<?php echo $site_name; ?>">

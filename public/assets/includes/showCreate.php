@@ -48,7 +48,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                <button type="submit" class="btn btn-primary">CREATE ACCOUNT</button>
+                <button type="button" class="btn btn-primary" onclick="return doCreate();">CREATE ACCOUNT</button>
             </div>
         </div>
     </form>
