@@ -88,24 +88,30 @@
       return $retval;
     }
 
-    // $data = "{ \"jsonrpc\":\"2.0\",\r\n\"method": "heyServer",\r\n\"params\": {},\r\n\"id\": 1 }";
+    $data = "{ \"jsonrpc\":\"2.0\", \"method\":\"getStartTime\", \"params\": {}, \"id\": 1 }";
 
-    // // Send TCP data
-    // socket_write($socket, $data, strlen($data));
+    // Send TCP data
+    socket_write($socket, $data, strlen($data));
 
-    // // Receive TCP reply
-    // $jsonData = '';
-    // $tmpbuff = '';
-    // while ($tmpbuff = socket_read($socket, 2048)) {
-    //   $jsonData .= $tmpbuff;
-    // }
+    // Receive TCP reply
+    $jsonData = '';
+    $tmpbuf = '';
+    if ($tmpbuf = socket_read($socket, 2048)) {
+      $jsonData .= $tmpbuf;
+    }
+    else {
+      $retval->msg = "Failed to read RPC reply.";
+      return $retval;
+    }
 
-    // $decJson = json_decode( $jsonData );
-
-    // if(!($result === FALSE)){
+    //error_log($jsonData);
+    $decJson = json_decode( $jsonData );
+    // error_log($decJson);
+    if ($decJson != null) {
       $retval->value = 0;
       $retval->msg = "Server is online!";
-    // }
+      $retval->retmsg = $decJson->result;
+    }
     return $retval;
   }
 ?>

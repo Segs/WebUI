@@ -213,6 +213,15 @@ serverOnline = function(){
                   status = "OFFLINE";
                   document.getElementById("onoff").style.color = "red";
               }
+              else {
+                  var startTime = Math.trunc((Date.now() - (parseInt(data.retmsg) * 1000))/1000);
+                  var Days = Math.trunc(startTime / 86400);
+                  var Hours = Math.trunc((startTime % 86400) / 3600);
+                  var Minutes = Math.trunc(startTime % 3600 / 60);
+                  var uptime = Days + "d, " + Hours +
+                      "h, " + Minutes + "m";
+                  document.getElementById("uptime").innerText = uptime;
+              }
               document.getElementById("onoff").innerText = status;
           });
 }
