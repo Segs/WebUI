@@ -69,4 +69,43 @@
     $mysqli->close();
   }
 
+  function onlineStatus(&$retval){
+    include 'settings.php';
+    // Get IP address of target server
+    $address = gethostbyname($serverurl);
+
+    // Create TCP/IP socket
+    $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+    if ($socket === false) {
+      $retval->msg = "Socket creation failed!";
+      return $retval;
+    }
+
+    // Connect socket
+    $result = socket_connect($socket, $address, 6001);
+    if ($result === false) {
+      $retval->msg = "socket_connect() failed.";
+      return $retval;
+    }
+
+    // $data = "{ \"jsonrpc\":\"2.0\",\r\n\"method": "heyServer",\r\n\"params\": {},\r\n\"id\": 1 }";
+
+    // // Send TCP data
+    // socket_write($socket, $data, strlen($data));
+
+    // // Receive TCP reply
+    // $jsonData = '';
+    // $tmpbuff = '';
+    // while ($tmpbuff = socket_read($socket, 2048)) {
+    //   $jsonData .= $tmpbuff;
+    // }
+
+    // $decJson = json_decode( $jsonData );
+
+    // if(!($result === FALSE)){
+      $retval->value = 0;
+      $retval->msg = "Server is online!";
+    // }
+    return $retval;
+  }
 ?>

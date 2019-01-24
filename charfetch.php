@@ -29,8 +29,8 @@ function fetch_chars(){
                                 "INNER JOIN " . $accdb . ".accounts as b ON a.account_id = b.id " .
                                 "WHERE b.username = ?")){
         $stmt->bind_param('s', $_SESSION['user']);
-	$stmt->execute();
-	$stmt->bind_result($char_name, $entitydata);
+        $stmt->execute();
+        $stmt->bind_result($char_name, $entitydata);
         while($stmt->fetch()){
             $retval[] = json_encode(new retdata($char_name, $entitydata));
         }

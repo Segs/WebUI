@@ -177,6 +177,7 @@ window.onload = function() {
     var wv = document.getElementById('dash').innerHTML;
     document.getElementById('pagebody').innerHTML = wv;
     accsUpdate();
+    serverOnline();
     selectDiv(document.getElementById('dashboard'));
     document.getElementById('dashy').style.display = "block";
 }
@@ -198,6 +199,22 @@ signupFunction = function(){
           }).then(function(data){
               console.log(data);
               resultbox.innerHTML=data.retmsg;});
+}
+
+serverOnline = function(){
+    fetch("/serveronline.php",
+          {method: 'GET'
+          }).then(function(myBlob){
+              return myBlob.json();
+          }).then(function(data){
+              console.log(data);
+              var status = "ONLINE";
+              if (data.value){
+                  status = "OFFLINE";
+                  document.getElementById("onoff").style.color = "red";
+              }
+              document.getElementById("onoff").innerText = status;
+          });
 }
 
 accsUpdate = function(){
