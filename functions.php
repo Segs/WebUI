@@ -69,4 +69,49 @@
     $mysqli->close();
   }
 
+  function onlineStatus(&$retval){
+    include 'settings.php';
+    // Get IP address of target server
+    $address = gethostbyname($serverurl);
+
+    // Create TCP/IP socket
+    $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+    if ($socket === false) {
+      $retval->msg = "Socket creation failed!";
+      return $retval;
+    }
+
+    // Connect socket
+    $result = socket_connect($socket, $address, 6001);
+    if ($result === false) {
+      $retval->msg = "socket_connect() failed.";
+      return $retval;
+    }
+
+    $data = "{ \"jsonrpc\":\"2.0\", \"method\":\"getStartTime\", \"params\": {}, \"id\": 1 }";
+
+    // Send TCP data
+    socket_write($socket, $data, strlen($data));
+
+    // Receive TCP reply
+    $jsonData = '';
+    $tmpbuf = '';
+    if ($tmpbuf = socket_read($socket, 2048)) {
+      $jsonData .= $tmpbuf;
+    }
+    else {
+      $retval->msg = "Failed to read RPC reply.";
+      return $retval;
+    }
+
+    //error_log($jsonData);
+    $decJson = json_decode( $jsonData );
+    // error_log($decJson);
+    if ($decJson != null) {
+      $retval->value = 0;
+      $retval->msg = "Server is online!";
+      $retval->retmsg = $decJson->result;
+    }
+    return $retval;
+  }
 ?>

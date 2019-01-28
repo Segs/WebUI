@@ -8,7 +8,6 @@
 
   session_start();
   $title = "SEGS page";
-  $serverstatus = "ONLINE";
   include 'functions.php';
 ?>
 <!DOCTYPE HTML5>
@@ -28,9 +27,9 @@
       <div id="dashy" class="contained">
         <div id="serverstatus">
           <p class="bigtext">Server Status</p>
-          Server is currently <span id="onoff"><?php echo $serverstatus; ?></span>
+          Server is currently <span id="onoff"></span>
           <div id="statsbox">
-            <div class="value">Server Uptime</div><div class="size">32d, 16h, 23m</div>
+            <div class="value">Server Uptime</div><div class="size" id="uptime"></div>
             <div class="value">Players Online</div><div class="size">23</div>
             <div class="value">Server Version</div><div class="size">0.5.0</div>
             <div class="value">Unique Accounts</div><div class="size" id="numaccs"></div>
@@ -111,10 +110,10 @@
         </div>
         <?php } ?>
         <a href="https://github.com/Segs/WebUI/issues">
-	<div id="reportbutton">
-	  Report Bugs!
+        <div id="reportbutton">
+          Report Bugs!
         </div>
-	</a>
+        </a>
       </div>
       <div id="headmenu">
         <div class="item selected" id="dashboard" onClick="goHome();">
