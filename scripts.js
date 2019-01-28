@@ -214,14 +214,14 @@ serverOnline = function(){
                   document.getElementById("onoff").style.color = "red";
               }
               else {
-                  var startTime = Math.trunc((Date.now() - (parseInt(data.retmsg) * 1000))/1000);
+                  var startTime = Math.trunc((Date.now() - (parseInt(data.retmsg[0]) * 1000))/1000);
                   var Days = Math.trunc(startTime / 86400);
                   var Hours = Math.trunc((startTime % 86400) / 3600);
                   var Minutes = Math.trunc(startTime % 3600 / 60);
                   var uptime = Days + "d, " + Hours +
                       "h, " + Minutes + "m";
                   document.getElementById("uptime").innerText = uptime;
-                  var svr_version = "v0.6.1";
+                  var svr_version = data.retmsg[1];
                   document.getElementById("svr_version").innerText = svr_version;
               }
               document.getElementById("onoff").innerText = status;
