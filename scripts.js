@@ -221,6 +221,8 @@ serverOnline = function(){
                   var uptime = Days + "d, " + Hours +
                       "h, " + Minutes + "m";
                   document.getElementById("uptime").innerText = uptime;
+                  var svr_version = "v0.6.1";
+                  document.getElementById("svr_version").innerText = svr_version;
               }
               document.getElementById("onoff").innerText = status;
           });
