@@ -9,7 +9,7 @@
       <div class="content">
         <div class="container-fluid">
           <div class="card">
-            <div class="card-header card-header-primary">
+            <div class="card-header card-header-<?php echo $site_color; ?>">
               <h3 class="card-title">Notifications</h3>
               <p class="card-category">Handcrafted by our friend
                 <a target="_blank" href="https://github.com/mouse0270">Robert McIntosh</a>. Please checkout the

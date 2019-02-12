@@ -7,14 +7,17 @@
      */
 
     session_start();
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+    
     require_once '../config/config.php';
     if (isset($_GET['page'])):
         $page = $_GET["page"];
     else:
         $page = "dashboard";
     endif;
-    setcookie("CurrentPage", $page);
+    setCookie("CurrentPage", $page);
 
 ?>
 
@@ -43,18 +46,15 @@
 
     <body class="">
         <div class="wrapper ">
-            <div id="modal-login" class="modal fade" tabindex="-1" role="dialog">
+            <div id="modal-content" class="modal fade" tabindex="-1" role="dialog">
                 <?php require_once 'assets/includes/showLogin.php'; ?>
             </div>
-            <div id="modal-create" class="modal fade" tabindex="-1" role="dialog">
-                <?php require_once 'assets/includes/showCreate.php'; ?>
-            </div>
-            <div class="sidebar" data-color="<?php echo $site_color; ?>" data-background-color="white" data-image="">
+            <div class="sidebar addScroll" data-color="<?php echo $site_color; ?>" data-background-color="white" data-image="">
                 <!--
                     Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
                     Tip 2: you can also add an image using data-image tag
                 -->
-                <div class="logo">
+                <div class="customLogo">
                     <a href="<?php echo $site_url; ?>" class="simple-text logo-normal" target="_blank">
                         <img class="img-fluid" src="<?php echo $site_logo ; ?>" alt="<?php echo $site_name; ?>">
                     </a>
@@ -116,7 +116,7 @@
 
                             <?php } else { ?>
                                 <li class="nav-item ">
-                                    <a class="nav-link" href="#modal-login" data-toggle="modal" data-target="#modal-login">
+                                    <a class="nav-link" href="#modal-content" data-toggle="modal" data-target="#modal-content">
                                         <i class="fas fa-sign-in-alt"></i> Login or Sign Up
                                     </a>
                                 </li>
