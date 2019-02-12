@@ -32,7 +32,7 @@ function updateMain(m_pageName) {
 function updateModal(m_pageName) {
     var m_include_file;
     m_include_file = 'assets/includes/' + m_pageName + '.php'
-    makeRequest('modal-login', m_include_file, showContents);
+    makeRequest('modal-content', m_include_file, showContents);
 }
 
 function doLogin(){
@@ -77,11 +77,11 @@ function doLogout(){
     return true;
 }
 
-function doCreate(){
-    var formdata = document.getElementById('modal_form_create');
+function doSignup(){
+    var formdata = document.getElementById('signupform');
     var resultbox = document.getElementById('signupFail');
-    var bodycont = "modal_create_username=" + formdata.modal_create_username.value + "&modal_create_password=" + formdata.modal_create_password.value;
-    fetch("assets/includes/createUser.php",
+    var bodycont = "user=" + formdata.username.value + "&pass=" + formdata.password.value;
+    fetch("/assets/includes/createUser.php",
           {method: 'POST',
            headers: {
                'charset': 'utf-8',
@@ -118,7 +118,6 @@ function stripTrailingSlash(str) {
     }
     return str;
 }
-
 
 var url = window.location.pathname;
 var activePage = stripTrailingSlash(url);
@@ -216,7 +215,6 @@ function cityListPopulate(currentCity){
 }
 
 var entities;
-
 
 function goZoneSwitch(){
     var bodycontent = {
@@ -343,98 +341,385 @@ function moveCharacter(){
 }
 
 
-var wsUri = "wss://segs.aruin.com";
+var passwordMinLength = 6;
 
+function checkUsername(usernameMinLength)
+{
+    var formdata = document.getElementById('form_register');
+    var username = formdata.desired_username.value;
+    var isAvailable = false;
+    var isLongEnough = false;
+    var isValid = false;
 
-var output;
-var available_services = ["helloServer", "getVersion"]; // To add a new service, add to this list.
+    // Check username length
+    if(username.length >= usernameMinLength)
+    {
+        isLongEnough = true;
+    }
+    changeStatusById("username-requirements-length", isLongEnough);
 
-function add_services() {
-    var table = document.getElementById("button_table");
-    var i;
-    for (i = 0; i < available_services.length; i++) {
-        var row = table.insertRow(0);
-        var cell1 = row.insertCell(0);
-        var pre = document.createElement("button");
-        pre.setAttribute("id", available_services[i]);
-        pre.setAttribute("class", "service_button");
-        pre.addEventListener('click', function() {
-            makeCall(this.id);
-        }, false);
-        var buttonText = available_services[i];
-        pre.innerHTML = buttonText;
-        cell1.appendChild(pre);
+    console.log(new Date().toUTCString() + " isAvailable: (PRIOR) " + isAvailable.toString());
+    
+    var request = checkUsernameAvailability(username);
+    
+    $.when(request).done(function(data)
+    {
+        if(data === 'true')
+        {
+            isAvailable = true;
+        }
+        console.log(new Date().toUTCString() + " isAvailable: (DURING) " + isAvailable.toString());
+
+        console.log(new Date().toUTCString() + " isAvailable: (END) " + isAvailable.toString());
+        changeStatusById("username-requirements-unique", isAvailable);
+        
+        if(isAvailable && isLongEnough)
+        {
+            isValid = true;
+        }
+        changeStatusById("username-requirements", isValid);
+    });
+}
+
+function checkUsernameAvailability(username)
+{
+    var username = "username=" + username;
+    var result = "";
+    var isAvailable = false;
+
+    var ajaxCall = {
+        url: "/assets/includes/checkAvailability.php",
+        data: username,
+        type: "POST",
+        success:function(data){
+            if(data !== null)
+            {
+                result = data;
+            } 
+            
+            if(result === 'true')
+            {
+                isAvailable = true;
+            }
+            return isAvailable;
+        },
+        error:function(data){
+            $("#user-availability-status").html('Error:' + data.responseText);
+            return isAvailable;
+        }
+    }
+    return $.ajax(ajaxCall);
+}
+
+function checkAvailability(usernameMinLength)
+{
+    var formdata = document.getElementById('form_register');
+    var username = formdata.desired_username.value;
+    var isAvailable = false;
+    var isLongEnough = false;
+    var isValid = false;
+
+    // Check username length
+    if(username.length >= usernameMinLength)
+    {
+        isLongEnough = true;
+    }
+    changeStatusById("username-requirements-length", isLongEnough);
+
+    // If username length is OK, check username availability
+    username = "username=" + username;
+    jQuery.ajax({
+        url: "/assets/includes/checkAvailability.php",
+        data: username,
+        type: "POST",
+        success:function(data){
+            //returns false if username exists.
+            console.log(new Date().toUTCString() + " data       : " + data);
+            if(data !== null)
+            {
+                result = data;
+            } else {
+                result = "";
+            }
+            console.log(new Date().toUTCString() + " result     : " + result);
+            
+            if(result === 'true')
+            {
+                isAvailable = true;
+                console.log(new Date().toUTCString() + " isAvailable: true");
+            }
+            else
+            {
+                isAvailable = false;
+                console.log(new Date().toUTCString() + " isAvailable: false");
+            }
+            console.log(new Date().toUTCString() + " isAvailable: (SUCCESS) " + isAvailable.toString());
+        },
+        error:function(data){
+            isAvailable = false;
+            console.log(new Date().toUTCString() + " isAvailable: (ERROR) " + isAvailable.toString());
+            $("#user-availability-status").html('Error:' + data.responseText);
+        }
+    });
+    console.log(new Date().toUTCString() + " isAvailable: (END) " + isAvailable.toString());
+    changeStatusById("username-requirements-unique", isAvailable);
+
+    
+    if(isAvailable && isLongEnough)
+    {
+        isValid = true;
+    }
+    changeStatusById("username-requirements", isValid);
+}
+
+function changeStatusById(entityId, isEnabled)
+{   
+    divEntityId = "#" + entityId
+    iconEntityId = "#icon-" + entityId;
+    if(isEnabled)
+    {
+        $(iconEntityId).removeClass("fa-square");
+        $(iconEntityId).addClass("fa-check-square");
+        $(divEntityId).removeClass("text-danger");
+        $(divEntityId).addClass("text-success");
+    }
+    else
+    {
+        $(iconEntityId).removeClass("fa-check-square");
+        $(iconEntityId).addClass("fa-square");
+        $(divEntityId).removeClass("text-success");
+        $(divEntityId).addClass("text-danger");
     }
 }
 
-function initRpc() {
-    add_services();//
-    output = document.getElementById("output");
-    openWebSocket();
+function checkPassword(str)
+{
+    var pattern = "^(?=.*\\d).{" + passwordMinLength.toString() + ",}$";
+    //var pattern = "^(?=.*\\d).{6,}$"; //[!@#$%^&*(),.?":{}|<>]
+    //var re = /^(?=.*\d).{6,}$/;
+    var re = new RegExp(pattern);
+    return re.test(str);
 }
 
-function openWebSocket() {
-    websocket = new WebSocket(wsUri);
-    websocket.onopen = function(evt) {
-        onOpen(evt)
-    };
-    websocket.onclose = function(evt) {
-        onClose(evt)
-    };
-    websocket.onmessage = function(evt) {
-        onMessage(evt)
-    };
-    websocket.onerror = function(evt) {
-        onError(evt)
-    };
+function checkPasswords()
+{
+    var username1 = document.getElementById('desired_password');
+    var password1 = document.getElementById('password1');
+    var password2 = document.getElementById('password2');
+    
+    var message = "";
+    if(username1 === null)
+    {
+        username1 = "";
+    }
+    
+    isSuccess = true;
+
+    if(password1.value === "" ) 
+    {
+        isSuccess = false;
+    }
+        
+    if(password2.value === "" ) 
+    {
+        isSuccess = false;
+    }
+
+    /*
+        DIV: id="username-unique"    ICON: id="icon-username-unique" 
+        DIV: id="passwords-match"    ICON: id="icon-passwords-match" 
+        DIV: id="password-complex"   ICON: id="icon-password-complex"
+        DIV: id="password-status"    ICON: id="icon-password-status" 
+        DIV: id="password1-status"   ICON: id="icon-password1-atatus"
+        DIV: id="password2-status"   ICON: id="icon-password2-status"
+        .switchClass( removeClassName, addClassName [, duration ] [, easing ] [, complete ] )
+        $("#password-status").html("");
+    */
+    
+    if(isSuccess && password1.value.length >= passwordMinLength)
+    {
+        $("#password-complex-length").addClass("text-success");
+        $("#password-complex-length").removeClass("text-danger");
+        $("#icon-password-complex-length").addClass("fa-check-square");
+        $("#icon-password-complex-length").removeClass("fa-square");
+        message += "Passwords are long enough\n";
+    } 
+    else
+    {
+        $("#password-complex-length").removeClass("text-success");
+        $("#password-complex-length").addClass("text-danger");
+        $("#icon-password-complex-length").removeClass("fa-check-square");
+        $("#icon-password-complex-length").addClass( "fa-square");
+        message += "Passwords are not long enough\n";
+        isSuccess =  false;
+    }
+        
+    if(password1.value !== "" && password1.value === password2.value)
+    {
+        $("#passwords-match").addClass("text-success");
+        $("#passwords-match").removeClass("text-danger");
+        $("#icon-passwords-match").addClass("fa-check-square");
+        $("#icon-passwords-match").removeClass("fa-square");
+        message += "Passwords match\n";
+    }
+    else
+    {
+        //$message += "Passwords do not match. ";
+        $("#passwords-match").removeClass("text-success");
+        $("#passwords-match").addClass("text-danger");
+        $("#icon-passwords-match").removeClass("fa-check-square");
+        $("#icon-passwords-match").addClass( "fa-square");
+        message += "Passwords do not match\n";
+        isSuccess =  false;
+    }
+
+    if(password1.value !== "" && password1.value !== username1.value)
+    {
+        /*password-complex-not-username*/
+        $("#password-complex-not-username").addClass("text-success");
+        $("#password-complex-not-username").removeClass("text-danger");
+        $("#icon-password-complex-not-username").addClass("fa-check-square");
+        $("#icon-password-complex-not-username").removeClass("fa-square");
+        message += "Password is different from Username\n";
+    }
+    else
+    {
+        $("#password-complex-not-username").removeClass("text-success");
+        $("#password-complex-not-username").addClass("text-danger");
+        $("#icon-password-complex-not-username").removeClass("fa-check-square");
+        $("#icon-password-complex-not-username").addClass( "fa-square");
+        message += "Password must be different from Username\n";
+        isSuccess =  false;
+    }
+
+    if(isSuccess && checkPassword(password1.value))
+    {
+        $("#password-complex-special").addClass("text-success");
+        $("#password-complex-special").removeClass("text-danger");
+        $("#icon-password-complex-special").addClass("fa-check-square");
+        $("#icon-password-complex-special").removeClass("fa-square");
+        message += "The password you have entered is valid\n";
+    }
+    else
+    {
+        $("#password-complex-special").removeClass("text-success");
+        $("#password-complex-special").addClass("text-danger");
+        $("#icon-password-complex-special").removeClass("fa-check-square");
+        $("#icon-password-complex-special").addClass( "fa-square");
+        message += "The password you have entered is not valid\n";
+        isSuccess = false;
+    }
+    
+    if(isSuccess)
+    {
+        $("#password-complex").addClass("text-success");
+        $("#password-complex").removeClass("text-danger");
+        $("#icon-password-complex").addClass("fa-check-square");
+        $("#icon-password-complex").removeClass("fa-square");
+    }
+    else
+    {
+        $("#password-complex").removeClass("text-success");
+        $("#password-complex").addClass("text-danger");
+        $("#icon-password-complex").removeClass("fa-check-square");
+        $("#icon-password-complex").addClass( "fa-square");
+    }
+    console.log(message);
+    return isSuccess;
 }
 
-function onOpen(evt) {
-    writeToScreen("CONNECTED TO: " + wsUri);
-}
-
-function makeCall(message) {
-    doSend(message);
-}
-
-function onClose(evt) {
-    writeToScreen("DISCONNECTED");
-}
-
-function onMessage(evt) {
-    writeToScreen('<span style="color: blue;">SERVER RESPONSE: ' + evt.data + '</span>');
-    processResponse(evt.data);
-}
-
-function onError(evt) {
-    writeToScreen('<span style="color: red;">SERVER ERROR:</span> ' + evt.data);
-}
-
-function processResponse(response) {
-    var obj = JSON.parse(response);
-    result = obj.result;
-    writeToScreen('<span style="color: green;">PROCESSED RESPONSE:</span> ' + result);
-    websocket.close();
-}
-
-function doSend(message) {
-    var timestamp = new Date().getTime();
-    var request_payload = JSON.stringify({
-        jsonrpc: "2.0",
-        method: message,
-        params: {},
-        id: timestamp
-    });
-    websocket.send(request_payload);
-    writeToScreen("SENT: " + request_payload);
-}
-
-function writeToScreen(message) {
-    var pre = document.createElement("p");
-    pre.style.wordWrap = "break-word";
-    pre.innerHTML = message;
-    output.appendChild(pre);
-}
+// ///var wsUri = "wss://segs.aruin.com";
+// ///
+// ///
+// /// var output;
+// /// var available_services = ["helloServer", "getVersion", "ping"]; // To add a new service, add to this list.
+// /// 
+// /// function add_services() {
+// ///     var table = document.getElementById("button_table");
+// ///     var i;
+// ///     for (i = 0; i < available_services.length; i++) {
+// ///         var row = table.insertRow(0);
+// ///         var cell1 = row.insertCell(0);
+// ///         var pre = document.createElement("button");
+// ///         pre.setAttribute("id", available_services[i]);
+// ///         pre.setAttribute("class", "service_button");
+// ///         pre.addEventListener('click', function() {
+// ///             makeCall(this.id);
+// ///         }, false);
+// ///         var buttonText = available_services[i];
+// ///         pre.innerHTML = buttonText;
+// ///         cell1.appendChild(pre);
+// ///     }
+// /// }
+// /// 
+// /// function initRpc() {
+// ///     add_services();//
+// ///     output = document.getElementById("output");
+// ///     //openWebSocket();
+// /// }
+// /// 
+// /// function openWebSocket() {
+// ///     websocket = new WebSocket(wsUri);
+// ///     websocket.onopen = function(evt) {
+// ///         onOpen(evt)
+// ///     };
+// ///     websocket.onclose = function(evt) {
+// ///         onClose(evt)
+// ///     };
+// ///     websocket.onmessage = function(evt) {
+// ///         onMessage(evt)
+// ///     };
+// ///     websocket.onerror = function(evt) {
+// ///         onError(evt)
+// ///     };
+// /// }
+// /// 
+// /// function onOpen(evt) {
+// ///     writeToScreen("CONNECTED TO: " + wsUri);
+// /// }
+// /// 
+// /// function makeCall(message) {
+// ///     doSend(message);
+// /// }
+// /// 
+// /// function onClose(evt) {
+// ///     writeToScreen("DISCONNECTED");
+// /// }
+// /// 
+// /// function onMessage(evt) {
+// ///     writeToScreen('<span style="color: blue;">SERVER RESPONSE: ' + evt.data + '</span>');
+// ///     processResponse(evt.data);
+// /// }
+// /// 
+// /// function onError(evt) {
+// ///     writeToScreen('<span style="color: red;">SERVER ERROR:</span> ' + evt.data);
+// /// }
+// /// 
+// /// function processResponse(response) {
+// ///     var obj = JSON.parse(response);
+// ///     result = obj.result;
+// ///     writeToScreen('<span style="color: green;">PROCESSED RESPONSE:</span> ' + result);
+// ///     websocket.close();
+// /// }
+// /// 
+// /// function doSend(message) {
+// ///     var timestamp = new Date().getTime();
+// ///     var request_payload = JSON.stringify({
+// ///         jsonrpc: "2.0",
+// ///         method: message,
+// ///         params: {},
+// ///         id: timestamp
+// ///     });
+// ///     websocket.send(request_payload);
+// ///     writeToScreen("SENT: " + request_payload);
+// /// }
+// /// 
+// /// function writeToScreen(message) {
+// ///     var pre = document.createElement("p");
+// ///     pre.style.wordWrap = "break-word";
+// ///     pre.innerHTML = message;
+// ///     output.appendChild(pre);
+// /// }
 
 //document.addEventListener("load", add_services(), false);
 //document.getElementById("rpc-connect").onclick = function() {
