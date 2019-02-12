@@ -33,8 +33,8 @@ function create_user($username, $passwd){
     $sample_salt = generate_salt();
     $return_value = new RETURN_TYPE();
     $hashed_pass_bytearr = hash_pass($password, $sample_salt);
-
-    include '../config/config.php';
+    php_console("Starting create_user");
+    include '../../../config/config.php';
     $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $accdb);
     if ($mysqli->connect_errno) {
         $return_value->message = "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;

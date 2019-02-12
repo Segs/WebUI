@@ -7,9 +7,9 @@
      */
 
     session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
     
     require_once '../config/config.php';
     if (isset($_GET['page'])):
@@ -134,20 +134,7 @@ error_reporting(E_ALL);
                 <footer class="footer">
                     <div class="container-fluid">
                         <nav class="float-left">
-                            <ul>
-                                <li>
-                                    <a href="https://segs.io"><i class="fas fa-home"></i> SEGS Home</a>
-                                </li>
-                                <li>
-                                    <a href="https://github.com/segs"><i class="fab fa-github"></i> SEGS on Github</a>
-                                </li>
-                                <li>
-                                    <a href="https://discord.segs.io/"><i class="fab fa-discord"></i> SEGS on Discord</a>
-                                </li>
-                                <li>
-                                    <a href="https://github.com/Segs/Segs/blob/develop/LICENSE.md"><i class="fas fa-handshake"></i> Licenses</a>
-                                </li>
-                            </ul>
+                            <?php include_once 'assets/includes/menuFooter.php'; ?>
                         </nav>
                         <div class="copyright float-right">&copy; <?php echo strftime("%Y"); ?> <a href="https://segs.io" target="_blank">SEGS</a>, with help from <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>.
                         </div>
