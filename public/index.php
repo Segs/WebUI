@@ -7,9 +7,9 @@
      */
 
     session_start();
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
     
     require_once '../config/config.php';
     if (isset($_GET['page'])):
@@ -29,6 +29,7 @@
         <link rel="icon" type="image/png" href="assets/img/favicon.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title><?php echo $site_title; ?></title>
+        <!-- WebUI Base -->
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <!-- Fonts and icons       -->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
@@ -46,10 +47,13 @@
 
     <body class="">
         <div class="wrapper ">
-            <div id="modal-content" class="modal fade" tabindex="-1" role="dialog">
+            <div id="modal-login" class="modal fade" tabindex="-1" role="dialog">
                 <?php require_once 'assets/includes/showLogin.php'; ?>
             </div>
-            <div class="sidebar addScroll" data-color="<?php echo $site_color; ?>" data-background-color="white" data-image="">
+            <div id="modal-message" class="modal fade" tabindex="-1" role="dialog">
+                <?php require_once 'assets/includes/showMessage.php'; ?>
+            </div>
+            <div class="sidebar" data-color="<?php echo $site_color; ?>" data-background-color="white" data-image="">
                 <!--
                     Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
                     Tip 2: you can also add an image using data-image tag
@@ -87,7 +91,7 @@
                                 </div>
                             </form>
                             <ul class="navbar-nav">
-                            <?php if(isset($_SESSION['authenticated'])) { ?>
+                            <?php if(isset($_SESSION['isAuthenticated'])) { ?>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="material-icons">notifications</i>
@@ -136,7 +140,8 @@
                         <nav class="float-left">
                             <?php include_once 'assets/includes/menuFooter.php'; ?>
                         </nav>
-                        <div class="copyright float-right">&copy; <?php echo strftime("%Y"); ?> <a href="https://segs.io" target="_blank">SEGS</a>, with help from <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>.
+                        <div class="copyright float-right">
+                            &copy; <?php echo strftime("%Y"); ?> <a href="https://segs.io" target="_blank">SEGS</a>, with help from <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>.
                         </div>
                     </div>
                 </footer>
@@ -158,7 +163,6 @@
         <script type="text/javascript" src="assets/js/material-dashboard.min.js?v=2.1.0"></script>
         <!-- Material Dashboard DEMO methods, don't include it in your project! -->
         <script type="text/javascript" src="assets/js/plugins/imageMapResizer.min.js"></script>
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.7.0/bootstrap-lightbox.min.js"></script>
         <script type="text/javascript" src="assets/js/segs.js"></script>
         <script type="text/javascript" src="//cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.min.js" charset="utf-8"></script>
     </body>

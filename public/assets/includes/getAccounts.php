@@ -1,11 +1,11 @@
 <?php
     /*
-     * SEGS - Super Entity Game Server
-     * http://www.segs.io/
-     * Copyright (c) 2006 - 2018 SEGS Team (see AUTHORS.md)
-     * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
-     */
-
+    * SEGS - Super Entity Game Server
+    * http://www.segs.io/
+    * Copyright (c) 2006 - 2018 SEGS Team (see Authors.md)
+    * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
+    */
+    
     session_start();
     require_once '../../../config/config.php';
 
@@ -18,8 +18,7 @@
     $ret = new retdata();
     $ret->num_accts = $mysqli->query("select id from accounts")->num_rows;
     $mysqli->select_db($chardb);
-    //$ret->num_chars = $mysqli->query("select count(*) from characters")->fetch_array()[0];
-    $ret->num_chars = $mysqli->query("select char_name from characters")->num_rows;
+    $ret->num_chars = $mysqli->query("select count(*) from characters")->fetch_array()[0];
     echo json_encode($ret);
     $mysqli->close();
 

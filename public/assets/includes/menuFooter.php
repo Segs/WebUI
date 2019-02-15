@@ -1,10 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jcicak
- * Date: 11/27/2018
- * Time: 03:14 PM
- */
+    /*
+     * SEGS - Super Entity Game Server
+     * http://www.segs.io/
+     * Copyright (c) 2006 - 2019 SEGS Team (see AUTHORS.md)
+     * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
+     */
+
 ?>
 
         <ul>

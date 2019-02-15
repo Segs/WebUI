@@ -36,18 +36,18 @@ function updateModal(m_pageName) {
 }
 
 function doLogin(){
-    let form_data = document.getElementById("modal_form_login");
-    let body_content = { 'username' : form_data.modal_login_username.value,
-                         'password' : form_data.modal_login_password.value};
-    console.log(form_data);
-    console.log(body_content);
+    var formdata = document.getElementById("modal_form_login");
+    var bodyvar = { 'username' : formdata.modal_login_username.value,
+                    'password' : formdata.modal_login_password.value};
+    console.log(formdata);
+    console.log(bodyvar);
     fetch("assets/includes/doLogin.php",
           {method: 'POST',
            headers:{
                'charset': 'utf-8',
                'content-type':'application/json'
            },
-           body: JSON.stringify(body_content)
+           body: JSON.stringify(bodyvar)
           }).then(function(myBlob){
               return myBlob.json();
           }).then(function(result){
@@ -78,25 +78,30 @@ function doLogout(){
 }
 
 function doSignup(){
-    var formdata = document.getElementById('signupform');
-    var resultbox = document.getElementById('signupFail');
-    var bodycont = "user=" + formdata.username.value + "&pass=" + formdata.password.value;
-    fetch("/assets/includes/createUser.php",
-          {method: 'POST',
-           headers: {
-               'charset': 'utf-8',
-               'content-type':'application/json'
-           },
-           body: JSON.stringify(body_content)
-          }).then(function(myBlob){
-              return myBlob.json();
-          }).then(function(data){
-              result_box.innerHTML=data.$user_message;});
-    console.log("Finished doCreate()");
+    var formdata = document.getElementById('form_register');
+    var resultbox = document.getElementById('register-result');
+    var bodycont = "username=" + formdata.desired_username.value + "&password1=" + formdata.password1.value + "&password2=" + formdata.password1.value;
+    console.log("doSignup started");
+    fetch("/assets/includes/createUser.php",{
+        method: 'POST',
+        headers: {
+            'charset': 'utf-8',
+            'content-type':'application/x-www-form-urlencoded'
+        },
+        body: bodycont
+    }).then(function(myBlob){
+        return myBlob.json();
+    }).then(function(data){
+        // console.log("data: " + data);
+        // console.log("return_message: " + data.return_message);
+        resultbox.innerHTML=data.return_message;
+        //resultbox.show();
+    });
+    console.log("doSignup complete");
 }
 
 
-//function AccountsInfo(){
+//function accountsInfo(){
 //    var elementAccts = document.getElementById("num_accts");
 //    var elementChars = document.getElementById("num_chars");
 //    fetch("/WebUI2/src/acc_count.php",
@@ -171,7 +176,7 @@ $(function() {
 	// create element id variable
 	$menuItem = "#menu_" + activePage;
 	// load page
-//	updateMain(activePage);
+    // updateMain(activePage);
 	// set page active
 	$($menuItem).addClass('active');
 });
@@ -216,7 +221,8 @@ function cityListPopulate(currentCity){
 
 var entities;
 
-function goZoneSwitch(){
+function goZoneSwitch()
+{
     var bodycontent = {
         'user': ''
     }
@@ -303,7 +309,8 @@ function getAccountsInfo(){
           });
 }
 
-function moveCharacter(){
+function moveCharacter()
+{
     var moveForm = document.getElementById('zonemove');
     var CS = moveForm.zoneSelector;
     var postBody = {'char' : moveForm.characterSelect.value,
@@ -415,6 +422,7 @@ function checkAvailability(usernameMinLength)
 {
     var formdata = document.getElementById('form_register');
     var username = formdata.desired_username.value;
+    username = username.replace(/^\s+|\s+$/g, "");
     var isAvailable = false;
     var isLongEnough = false;
     var isValid = false;
@@ -494,7 +502,9 @@ function changeStatusById(entityId, isEnabled)
 
 function checkPassword(str)
 {
-    var pattern = "^(?=.*\\d).{" + passwordMinLength.toString() + ",}$";
+    //var pattern = "^(?=.*\\d).{" + passwordMinLength.toString() + ",}$";
+    var pattern = "^^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$^+=!*()@%&]).{" + passwordMinLength.toString() + ",}$";
+    //^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,50}$
     //var pattern = "^(?=.*\\d).{6,}$"; //[!@#$%^&*(),.?":{}|<>]
     //var re = /^(?=.*\d).{6,}$/;
     var re = new RegExp(pattern);
@@ -503,26 +513,34 @@ function checkPassword(str)
 
 function checkPasswords()
 {
-    var username1 = document.getElementById('desired_password');
+    var username1 = document.getElementById('desired_username');
+    username1.value = username1.value.replace(/^\s+|\s+$/g, "");
     var password1 = document.getElementById('password1');
     var password2 = document.getElementById('password2');
+    var passwordIsLongEnough = true;
+    var passwordIsNotEmpty = true;
+    var passwordsMatch = true;
+    var passwordIsNotUserName = true;
+    var passwordIsValid = true;
+
+    var isSuccess = true;
     
     var message = "";
     if(username1 === null)
     {
         username1 = "";
     }
-    
-    isSuccess = true;
 
     if(password1.value === "" ) 
     {
-        isSuccess = false;
+        passwordIsNotEmpty = false;
+        isSuccess =  false;
     }
         
     if(password2.value === "" ) 
     {
-        isSuccess = false;
+        passwordIsNotEmpty = false;
+        isSuccess =  false;
     }
 
     /*
@@ -536,95 +554,36 @@ function checkPasswords()
         $("#password-status").html("");
     */
     
-    if(isSuccess && password1.value.length >= passwordMinLength)
+    if(!passwordIsNotEmpty || password1.value.length < passwordMinLength)
     {
-        $("#password-complex-length").addClass("text-success");
-        $("#password-complex-length").removeClass("text-danger");
-        $("#icon-password-complex-length").addClass("fa-check-square");
-        $("#icon-password-complex-length").removeClass("fa-square");
-        message += "Passwords are long enough\n";
+        passwordIsLongEnough = false;
+        isSuccess =  false;
     } 
-    else
-    {
-        $("#password-complex-length").removeClass("text-success");
-        $("#password-complex-length").addClass("text-danger");
-        $("#icon-password-complex-length").removeClass("fa-check-square");
-        $("#icon-password-complex-length").addClass( "fa-square");
-        message += "Passwords are not long enough\n";
-        isSuccess =  false;
-    }
+    changeStatusById("password-complex-length", passwordIsLongEnough);
         
-    if(password1.value !== "" && password1.value === password2.value)
+    if(!passwordIsNotEmpty || password1.value !== password2.value)
     {
-        $("#passwords-match").addClass("text-success");
-        $("#passwords-match").removeClass("text-danger");
-        $("#icon-passwords-match").addClass("fa-check-square");
-        $("#icon-passwords-match").removeClass("fa-square");
-        message += "Passwords match\n";
-    }
-    else
-    {
-        //$message += "Passwords do not match. ";
-        $("#passwords-match").removeClass("text-success");
-        $("#passwords-match").addClass("text-danger");
-        $("#icon-passwords-match").removeClass("fa-check-square");
-        $("#icon-passwords-match").addClass( "fa-square");
-        message += "Passwords do not match\n";
+        passwordsMatch = false;
         isSuccess =  false;
     }
+    changeStatusById("passwords-match", passwordsMatch);
 
-    if(password1.value !== "" && password1.value !== username1.value)
+    if(password1.value.toLowerCase() === username1.value.toLowerCase())
     {
-        /*password-complex-not-username*/
-        $("#password-complex-not-username").addClass("text-success");
-        $("#password-complex-not-username").removeClass("text-danger");
-        $("#icon-password-complex-not-username").addClass("fa-check-square");
-        $("#icon-password-complex-not-username").removeClass("fa-square");
-        message += "Password is different from Username\n";
-    }
-    else
-    {
-        $("#password-complex-not-username").removeClass("text-success");
-        $("#password-complex-not-username").addClass("text-danger");
-        $("#icon-password-complex-not-username").removeClass("fa-check-square");
-        $("#icon-password-complex-not-username").addClass( "fa-square");
-        message += "Password must be different from Username\n";
+        passwordIsNotUserName = false;
         isSuccess =  false;
     }
+    changeStatusById("password-complex-not-username", passwordIsNotUserName);
 
-    if(isSuccess && checkPassword(password1.value))
+    if(!passwordIsNotEmpty || !checkPassword(password1.value))
     {
-        $("#password-complex-special").addClass("text-success");
-        $("#password-complex-special").removeClass("text-danger");
-        $("#icon-password-complex-special").addClass("fa-check-square");
-        $("#icon-password-complex-special").removeClass("fa-square");
-        message += "The password you have entered is valid\n";
-    }
-    else
-    {
-        $("#password-complex-special").removeClass("text-success");
-        $("#password-complex-special").addClass("text-danger");
-        $("#icon-password-complex-special").removeClass("fa-check-square");
-        $("#icon-password-complex-special").addClass( "fa-square");
-        message += "The password you have entered is not valid\n";
+        passwordIsValid = false;
         isSuccess = false;
     }
-    
-    if(isSuccess)
-    {
-        $("#password-complex").addClass("text-success");
-        $("#password-complex").removeClass("text-danger");
-        $("#icon-password-complex").addClass("fa-check-square");
-        $("#icon-password-complex").removeClass("fa-square");
-    }
-    else
-    {
-        $("#password-complex").removeClass("text-success");
-        $("#password-complex").addClass("text-danger");
-        $("#icon-password-complex").removeClass("fa-check-square");
-        $("#icon-password-complex").addClass( "fa-square");
-    }
-    console.log(message);
+    changeStatusById("password-complex-special", passwordIsValid);
+
+    changeStatusById("password-complex", isSuccess);
+    // console.log(message);
     return isSuccess;
 }
 

@@ -1,10 +1,10 @@
 <?php
-    /*
-     * SEGS - Super Entity Game Server
-     * http://www.segs.io/
-     * Copyright (c) 2006 - 2019 SEGS Team (see AUTHORS.md)
-     * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
-     */
+/*
+ * SEGS - Super Entity Game Server
+ * http://www.segs.io/
+ * Copyright (c) 2006 - 2019 SEGS Team (see AUTHORS.md)
+ * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
+ */
 
     session_start();
 
@@ -25,8 +25,8 @@
         $decoded;
         $accountid;
         if($stmt = $mysqli->prepare("SELECT entitydata,a.id FROM characters as c INNER JOIN " .
-                 $accdb . ".accounts as a ON a.id = c.account_id " .
-                 "WHERE a.username = ? AND c.slot_index = ?")){
+                $accdb . ".accounts as a ON a.id = c.account_id " .
+                "WHERE a.username = ? AND c.slot_index = ?")){
 
             $mapnames = array("City_00_01", "City_01_01", "City_01_02", "City_01_03", "City_02_01", "City_02_02",
             "City_03_01", "City_03_02", "City_04_01", "City_04_02", "City_05_01",
@@ -55,7 +55,7 @@
             return $retval;
         }
         if($stmnt = $mysqli->prepare("UPDATE characters SET entitydata = ? " .
-                     "WHERE account_id = ? AND slot_index = ?")){
+                    "WHERE account_id = ? AND slot_index = ?")){
             $stmnt->bind_param('sii', json_encode($decoded,JSON_UNESCAPED_SLASHES), $accountid, $charidx);
             if(!$stmnt->execute()){
                 $retval->msg = "Entitydata insertion failed.";

@@ -1,14 +1,20 @@
 <?php
+    /*
+     * SEGS - Super Entity Game Server
+     * http://www.segs.io/
+     * Copyright (c) 2006 - 2019 SEGS Team (see AUTHORS.md)
+     * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
+     */
+
     session_start();
     if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
         header("Location: https://" . $_SERVER['HTTP_HOST']);
     }
     header('Content-Type: application/json');
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
     require '../../../vendor/autoload.php';
-
     require '../../../config/config.php';
     use Segs\DatabaseConnection;
 
@@ -32,5 +38,5 @@ error_reporting(E_ALL);
         $_SESSION['IsAvailable'] = 'false';
         $response = 'not_supplied';
     }
-
+    
     echo json_encode($response);

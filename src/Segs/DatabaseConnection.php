@@ -1,5 +1,6 @@
 <?php
 namespace Segs;
+
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
@@ -12,8 +13,14 @@ class DatabaseConnection
         $this->conn = $this->connectDatabase($dbhost, $dbuser, $dbpass, $database);
         if(!empty($this->conn))
         {
-            $this->selectDatabase($database);
+            try {
+				$this->selectDatabase($database);
+				return true;
+			} catch (Exception $e) {
+				return $e;
+			}
         }
+		return false;
     }
      
     function connectDatabase($dbhost, $dbuser, $dbpass, $database)
@@ -37,10 +44,14 @@ class DatabaseConnection
         return $rowcount;
     }
 
-    public function PrepareStatement($statement)
+    public function prepareStatement($statement)
     {
-        global $conn;
-        $conn->prepare($statement);
-        return $conn;
+        //global $conn;
+        return $this->conn->prepare($statement);
+        //return $conn;
     }
+	
+	public function closeConnection() {
+		$this->conn->close();
+	}
 }
