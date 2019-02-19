@@ -81,7 +81,7 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card card-stats">
                             <div class="card-header card-header-<?php echo $server_status_color; ?> card-header-icon">
                                 <div class="card-icon"><i class="fa fa-heartbeat"></i></div>
@@ -93,7 +93,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card card-stats">
                         <div class="card-header card-header-<?php echo $server_uptime_color; ?> card-header-icon">
                             <div class="card-icon"><i class="material-icons">access_time</i></div>
@@ -105,7 +105,7 @@
                         </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card card-stats">
                         <div class="card-header card-header-<?php echo $server_version_color; ?> card-header-icon">
                             <div class="card-icon"><i class="fa fa-code"></i></div>
@@ -119,7 +119,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card card-stats">
                         <div class="card-header card-header-info card-header-icon">
                             <div class="card-icon"><i class="fa fa-user-astronaut"></i></div>
@@ -131,7 +131,7 @@
                         </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card card-stats">
                         <div class="card-header card-header-info card-header-icon">
                             <div class="card-icon"><i class="fa fa-users"></i></div>
@@ -143,7 +143,7 @@
                         </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card card-stats">
                             <div class="card-header card-header-info card-header-icon">
                                 <div class="card-icon"><i class="fa fa-user-secret"></i></div>

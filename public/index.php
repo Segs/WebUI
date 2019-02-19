@@ -7,9 +7,9 @@
      */
 
     session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
     
     require_once '../config/config.php';
     if (isset($_GET['page'])):
@@ -114,14 +114,14 @@ error_reporting(E_ALL);
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#logout" onclick="doLogout();">
-                                        <i class="fas fa-sign-out-alt"></i> Log Out
+                                        <i class="fas fa-sign-out"></i>Log Out
                                     </a>
                                 </li>
 
                             <?php } else { ?>
                                 <li class="nav-item ">
-                                    <a class="nav-link" href="#modal-content" data-toggle="modal" data-target="#modal-content">
-                                        <i class="fas fa-sign-in-alt"></i> Login or Sign Up
+                                    <a class="nav-link" href="#modal-login" data-toggle="modal" data-target="#modal-login">
+                                        <i class="fas fa-sign-in"></i>Login or Sign Up
                                     </a>
                                 </li>
                             <?php } ?>
@@ -163,8 +163,7 @@ error_reporting(E_ALL);
         <script type="text/javascript" src="assets/js/material-dashboard.min.js?v=2.1.0"></script>
         <!-- Material Dashboard DEMO methods, don't include it in your project! -->
         <script type="text/javascript" src="assets/js/plugins/imageMapResizer.min.js"></script>
-        <script type="text/javascript" src="assets/js/segs.js"></script>
         <script type="text/javascript" src="//cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="assets/js/segs.js"></script>
     </body>
-
 </html>

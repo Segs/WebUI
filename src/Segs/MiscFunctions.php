@@ -7,17 +7,8 @@
      */
     namespace Segs;
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
- 
     use Segs\DatabaseConnection;
     use Segs\ReturnType;
-
-    // class RETURN_TYPE {
-    //     public $return_message = array();
-    //     public $value = "0";
-    // }
 
     class MiscFunctions {
 
@@ -26,7 +17,8 @@ error_reporting(E_ALL);
         // //     //die('Functions');
         // // }
 
-        function debug_to_console( $data ) {
+        function debugToConsole( $data )
+        {
             if ( is_array( $data ) ) {
                 $output = "<script>console.log( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
             } else {
@@ -35,7 +27,8 @@ error_reporting(E_ALL);
             echo $output;
         }
 
-        function generateSalt($length = 16) {
+        function generateSalt($length = 16)
+        {
             $possible_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678';
             $rand_string = '';
             for($i = 0; $i < $length; ++$i) {
@@ -44,7 +37,8 @@ error_reporting(E_ALL);
             return utf8_encode($rand_string);
         }
 
-        function hashPassword($plaintext_pass, $salt) {
+        function hashPassword($plaintext_pass, $salt)
+        {
             try {
                 $hashed_password = hash('sha256', $plaintext_pass . $salt, true);
             } catch (Exception $e) {
@@ -68,21 +62,21 @@ error_reporting(E_ALL);
                 if($stmt = $db_conn->prepareStatement("INSERT INTO accounts(username, passw, salt) VALUES(?, ?, ?)")) {
                     $stmt->bind_param('sss', $m_username, $hashed_pass_bytearr, $sample_salt);
                     if(!$stmt->execute()) {
-                        $return_value->message = "User creation failed.<br>";
+                        $return_value->return_message[] = "<div>User creation failed.<div>";
                         $return_value->value = 1;
                     } else {
-                        $return_value->return_message[] = "User '$m_username' added to database.<br>";
+                        $return_value->return_message[] = "<div>The username '$m_username' hs been added to database.</div>";
                         $return_value->value = 0;
                     }
                 }
             } else {
-                $return_value->message = "Failed to connect to MySQL.";
+                $return_value->message = "<div>Failed to connect to the database.<div>";
                 $return_value->value = 1;
             }
             return $return_value;
         }
 
-        public function FetchChat()
+        public function fetchChat()
         {
             include '../../../config/config.php';
             echo $dbhost;

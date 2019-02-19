@@ -7,156 +7,112 @@
     */
 
     session_start();
+
+    if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
+        header("Location: https://" . $_SERVER['HTTP_HOST']);
+    }
+
     require_once '../../../config/config.php';
     require_once '../../../vendor/autoload.php';
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
     
     use Segs\DatabaseConnection;
     use Segs\MiscFunctions;
-    use Segs\ReturnValue;
+    use Segs\ReturnType;
     
-    $username = "";
-    $password1 = "";
-    $password2 = "";
+    $post_content = trim(file_get_contents("php://input"));
+    $decoded_post_content = json_decode($post_content, true);
+
+    $username = $decoded_post_content['username'];
+    $password1 = $decoded_post_content['password1'];
+    $password2 = $decoded_post_content['password2'];
+    
     $canContinue = true;
-   /* Need to validate:
+    $user_message = new ReturnType();
+    
+    /* Need to validate:
         username
             validate length
             validate availability
         password
+            validate not equal to username
             validate length
-            validate complexity
             validate password1 and password2 match
+            validate complexity
     */
 
-    //class RETURN_VALUE {
-    //    public $value = 0;
-    //    public $return_message = array();
-    //}
-
-    $user_message = new ReturnValue();
-
     //Validate variables
-    if(!empty($_POST['username'])) {
-        $username = $_POST['username'];
-    } else {
+    if($username == null || $username == "") {
         $canContinue = false;
-        $user_message->value += 1;
+        $user_message->value = 1;
         $user_message->return_message[] = "Username is empty.";
     }
-
+    
     if(strlen($username) < $min_username_len) {
         // Too short, cannot continue
         $canContinue = false;
-        $user_message->value += 2;
-        $user_message->return_message[] = "Username is too short.";
+        $user_message->value = 1;
+        $user_message->return_message[] = "Username '$username' is too short.";
     }
-
-    if($canContinue && !empty($_POST['password1'])) {
-        $password1 = $_POST['password1'];
-    } else {
-        $canContinue = false;
-        $user_message->value += 4;
-        $user_message->return_message[] = "Password1 is empty.";
-    }
-
-    if($canContinue && !empty($_POST['password2'])) {
-        $password2 = $_POST['password2'];
-    } else {
-        $canContinue = false;
-        $user_message->value += 8;
-        $user_message->return_message[] = "Password2 is empty.";
-    }
-
+    
     // validate username availability
     if(!$canContinue || !isset($_SESSION['IsAvailable']) || $_SESSION['IsAvailable'] !== 'true') {
         $canContinue = false;
-        $user_message->value += 16;
-        $user_message->return_message[] = "Username is not available.";
+        $user_message->value = 1;
+        $user_message->return_message[] = "The username '$username' is not available.";
     }
-
-    // validate passwords match
-    if(!$canContinue || $password1 !== $password2) {
+    
+    if($password1 == null || $password1 == "") {
         $canContinue = false;
-        $user_message->value += 32;
+        $user_message->value = 1;
+        $user_message->return_message[] = "Password1 is empty.";
+    }
+    
+    if($password2 == null || $password2 == "") {
+        $canContinue = false;
+        $user_message->value = 1;
+        $user_message->return_message[] = "Password2 is empty.";
+    }
+    
+    if(strlen($password1) < $min_password_len) {
+        $canContinue = false;
+        $user_message->value = 1;
+        $user_message->return_message[] = "Password is too short.";
+    }
+    
+    // validate passwords match
+    if($password1 !== $password2) {
+        $canContinue = false;
+        $user_message->value = 1;
         $user_message->return_message[] = "Passwords do not match.";
     }
-
+    
     function addUser($m_username, $m_password, &$m_user_message) {    
-    //function addUser($m_username, $m_password) {
-        //$m_user_message = new RETURN_VALUE;
         $miscFunctions = new MiscFunctions();
-
-        global $site_admin;
-        //, $dbhost, $dbuser, $dbpass, $accdb;
-        //global $segsFunction;
-        //$db_conn = new DatabaseConnection($dbhost, $dbuser, $dbpass, $accdb);
-        //
-        // if ($m_username == "" || $m_password == "") {
-        //     $return_value->value = 1;
-        //     $return_value->return_message = "Login name and password cannot be empty.";
-        // } else {
-
-        // if(!empty($_POST["username"]))
-        //  {
-        //     $username = $_POST["username"];
-        //     $query = "SELECT * FROM accounts WHERE username='" . $username . "'";
-        //     $user_count = $db_conn->getNumRows($query);
-        //     if($user_count > 0) {
-        //         $_SESSION['IsAvailable'] = 'false';
-        //         $response = 'false';
-        //     } else {
-        //         $_SESSION['IsAvailable'] = 'true';
-        //         $response = 'true';
-        //     }
-        // }
-        // else
-        // {
-        //     $_SESSION['IsAvailable'] = 'false';
-        //     $response = 'not_supplied';
-        // }
-        $m_create_user_message = $miscFunctions->createUser($m_username, $m_password);
-        $m_user_message->value += $m_create_user_message->value;
-        $m_user_message->return_message[] = $m_create_user_message->return_message;
+        $m_server_message = new ReturnType();
         
-        if(!$m_create_user_message->value) {
-            $m_user_message->return_message[] = "Account for " . $m_username . " successfully created.<br>\n";
-            $m_user_message->return_message[] = "Welcome, hero!";
+        global $site_admin;
+        $m_server_message = $miscFunctions->createUser($m_username, $m_password);
+
+        if($m_server_message->value === 0) {
+            $m_user_message->value = 0;
+            $m_user_message->return_message[] = "<div>Welcome, {$m_username}!</div>";
+            $m_user_message->return_message[] = "<div>Your account has been successfully created.</div>";
         } else {
-            $m_user_message->value += 256;
-            $m_user_message->return_message[] = "Something went wrong. Please contact {$site_admin}.";
+            $m_user_message->value = 1;
+            $m_user_message->return_message[] = "<div>Something went wrong. Please contact {$site_admin}.</div>";
         }
-        // }
+
         return $m_user_message;
     }
-
-    addUser($username, $password1, $user_message);
     
     if($canContinue) {
-        //addUser($username, $password1, $user_message);
-        // $message = new RETURN_VALUE;
-        // $message = addUser($username, $password1);
-        // $user_message->value += $message->value;
-        // $user_message->return_message[] = $message->return_message;
-
-        
-        $user_message->value += 64;
-        $user_message->return_message[] = "Would this work?";
-        // $user_message->return_message[] = $message.return_message; 
+        addUser($username, $password1, $user_message);
+        if($login_users_on_create) {
+            $_SESSION['isAuthenticated'] = true;
+        }
     } else {
-        $user_message->value += 128;
-        $user_message->return_message[] = "You did not set everything.";
+        $user_message->return_message[] = "There was a problem creating your account.";
     }
 
     echo json_encode($user_message);
-    //if(isset($_POST['user']) && isset($_POST['pass'])){
-    //    addUser($_POST['username'], $_POST['password'], $user_message);
-    //}
-    //else{
-    //    $usermsg->retmsg = "You did not set everything.";
-    //    echo json_encode($user_message);
-    //}
-
 

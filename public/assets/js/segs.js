@@ -5,7 +5,8 @@
  * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
  */
 
-function makeRequest(m_elementId, m_page, m_function) {
+function makeRequest(m_elementId, m_page, m_function)
+{
 	var httpRequest;
 	var m_docElement = document.getElementById(m_elementId);
     httpRequest = new XMLHttpRequest();
@@ -18,89 +19,121 @@ function makeRequest(m_elementId, m_page, m_function) {
     httpRequest.send();
 }
 	
-function showContents(m_docElement, m_httpRequest) {
+function showContents(m_docElement, m_httpRequest)
+{
 	m_docElement.innerHTML = m_httpRequest.responseText;
 }
 
-function updateMain(m_pageName) {
+function updateMain(m_pageName)
+{
     var m_view_file;
     m_view_file = 'assets/views/' + m_pageName + '.php'
     makeRequest('main-content', m_view_file, showContents);
     setCookie("CurrentPage", m_pageName, 1);
 }
 
-function updateModal(m_pageName) {
+function updateModal(m_pageName)
+{
     var m_include_file;
     m_include_file = 'assets/includes/' + m_pageName + '.php'
     makeRequest('modal-content', m_include_file, showContents);
 }
 
-function doLogin(){
-    var formdata = document.getElementById("modal_form_login");
-    var bodyvar = { 'username' : formdata.modal_login_username.value,
-                    'password' : formdata.modal_login_password.value};
-    console.log(formdata);
-    console.log(bodyvar);
-    fetch("assets/includes/doLogin.php",
-          {method: 'POST',
-           headers:{
-               'charset': 'utf-8',
-               'content-type':'application/json'
-           },
-           body: JSON.stringify(bodyvar)
-          }).then(function(myBlob){
-              return myBlob.json();
-          }).then(function(result){
-              try{
-                  window.location.replace(window.location.pathname);
-              }
-              catch(e){
-                  window.location.reload();
-              }
-          });
+function doLogin()
+{
+    var form_data = document.getElementById("modal_form_login");
+    var body_content = { 'username' : form_data.modal_login_username.value,
+                    'password' : form_data.modal_login_password.value};
+	$("#modal-login").modal('hide');
+    fetch("/assets/includes/doLogin.php",{
+        method: 'POST',
+        headers:{
+            'charset': 'utf-8',
+            'content-type':'application/json'
+        },
+        body: JSON.stringify(body_content)
+    })
+        .then(function(myBlob){
+            return myBlob.json();
+    })
+        .then(function(result){
+            try{
+                $("#modal-result").html(result.return_message);
+                $("#modal-message").modal('show');
+            } catch(e) {
+                window.location.reload();
+            }
+        });
     return false;
 }
 
-function doLogout(){
-    fetch("assets/includes/doLogout.php",
-          {method: 'GET'
-          }).then(function(result){
-              return result;
-          }).then(function(data){
-              try{
-                  window.location.replace(window.location.pathname);
-              }
-              catch(e){
-                  window.location.reload();
-              }
-          });
+function doRefresh()
+{
+    try {
+        var urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.get('page') === "register") {
+            window.location.replace('/');
+        } else {
+            window.location.reload();
+        }
+    } catch {
+        window.location.replace('/');
+    }
+    return false;
+}
+
+function doLogout()
+{
+    fetch("/assets/includes/doLogout.php",{
+        method: 'GET'
+    }).then(function(myBlob){
+        return myBlob.json();
+    }).then(function(result){
+        try{
+            $("#modal-result").html(result.return_message);
+            $("#modal-message").modal('show');
+        } catch(e) {
+            window.location.reload();
+        }
+    });
     return true;
 }
 
-function doSignup(){
-    var formdata = document.getElementById('form_register');
+function doSignup()
+{
+    var form_data = document.getElementById('form_register');
     var resultbox = document.getElementById('register-result');
-    var bodycont = "username=" + formdata.desired_username.value + "&password1=" + formdata.password1.value + "&password2=" + formdata.password1.value;
-    console.log("doSignup started");
-    fetch("/assets/includes/createUser.php",{
+    var body_content = {'username': form_data.desired_username.value,
+                        'password1': form_data.password1.value,
+                        'password2': form_data.password2.value};
+	//$("#modal-login").modal('hide');
+    fetch("/assets/includes/createUser.php",
+    {
         method: 'POST',
-        headers: {
-            'charset': 'utf-8',
-            'content-type':'application/x-www-form-urlencoded'
-        },
-        body: bodycont
-    }).then(function(myBlob){
-        return myBlob.json();
-    }).then(function(data){
-        // console.log("data: " + data);
-        // console.log("return_message: " + data.return_message);
-        resultbox.innerHTML=data.return_message;
-        //resultbox.show();
-    });
-    console.log("doSignup complete");
+        headers: {'charset': 'utf-8',
+                  'content-type': 'application/json'},
+        body: JSON.stringify(body_content),
+    })
+        .then(myBlob => myBlob.json())
+        .then(function(result){
+            m_status = false;
+            try {
+                $("#modal-result").html(result.return_message);
+                $("#modal-message").modal('show');
+                m_status = true;
+            } catch(e) {
+                //window.location.reload();
+                m_status = false;
+            }
+            return m_status;
+        })
+        .catch(function(error) {
+            console.log(new Date().toUTCString() + " " + error); 
+        });
+    return false;
 }
 
-
+/*
 //function accountsInfo(){
 //    var elementAccts = document.getElementById("num_accts");
 //    var elementChars = document.getElementById("num_chars");
@@ -114,10 +147,12 @@ function doSignup(){
 //              elementChars.innerHTML = data.num_chars;
 //          });
 //}
+*/
 
 /*menu handler*/
 //$(function(){
-function stripTrailingSlash(str) {
+function stripTrailingSlash(str)
+{
     if(str.substr(-1) == '/') {
         return str.substr(0, str.length - 1);
     }
@@ -135,10 +170,11 @@ var activePage = stripTrailingSlash(url);
       $(this).parent().addClass('active'); 
     } 
   });
-*/
 //});
+*/  
 
-function setActiveItem(){
+function setActiveItem()
+{
     var path = window.location.pathname;
     console.log(path);
     path = path.replace(/\/$/,"");
@@ -146,7 +182,8 @@ function setActiveItem(){
     path = decodeURIComponent(path)
 }
 
-function getCookie(cookieName) {
+function getCookie(cookieName)
+{
     var i, x, y, ARRcookies = document.cookie.split(";");
     for (i = 0; i < ARRcookies.length; i++) {
         x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="));
@@ -158,7 +195,8 @@ function getCookie(cookieName) {
     }
 }
 
-function setCookie(cookieName, cookieValue, expirationInDays) {
+function setCookie(cookieName, cookieValue, expirationInDays)
+{
     var expirationDate = new Date();
     expirationDate.setDate(expirationDate.getDate() + expirationInDays);
     var newCookieValue = escape(cookieValue) + ((expirationInDays == null) ? "" : "; expires=" + expirationDate.toUTCString());
@@ -181,7 +219,8 @@ $(function() {
 	$($menuItem).addClass('active');
 });
 
-function cityListPopulate(currentCity){
+function cityListPopulate(currentCity)
+{
     //document.getElementById('zoneswitch').style.display = "block";
     var cities = ["Outbreak", "Atlas Park", "King's Row", "Galaxy City",
                   "Steel Canyon", "Skyway City", "Talos Island", "Independence Port",
@@ -221,81 +260,85 @@ function cityListPopulate(currentCity){
 
 var entities;
 
-function goZoneSwitch()
+function doZoneSwitch() 
 {
     var bodycontent = {
         'user': ''
     }
-    fetch(window.location.origin + "/assets/includes/getCharacters.php",
-          {method: 'POST',
-           headers: {
-               'charset': 'utf-8',
-               'content-type': 'application/json'
-           },
-           body: JSON.stringify(bodycontent)
-          }).then(function(myBlob){
-              return myBlob.json();
-          }).then(function(results){
-              entities = results;
-              var myForm = document.createElement('form');
-              myForm.name = "zonemove";
-              myForm.id = "zonemove";
-              myForm.method = "POST";
-              
-              
-              var formgroup = document.createElement('div');
-              formgroup.className = "form-row align-items-center";
-              myForm.appendChild(formgroup);
+    fetch(window.location.origin + "/assets/includes/getCharacters.php",{
+        method: 'POST',
+        headers: {
+            'charset': 'utf-8',
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(bodycontent)
+    }).then(function(myBlob){
+        return myBlob.json();
+    }).then(function(results){
+        if(results.length == 0){
+            document.getElementById('switchbox').innerHTML = "You do not currently have any heroes on this server.<br>Once you have logged in and created one, you will see them here.";
+        } else {
+            entities = results;
+            var myForm = document.createElement('form');
+            myForm.name = "zonemove";
+            myForm.id = "zonemove";
+            myForm.setAttribute("onSubmit", "return moveCharacter()");
+            myForm.method = "POST";
+            
+            var formgroup = document.createElement('div');
+            formgroup.className = "form-row align-items-center";
+            myForm.appendChild(formgroup);
 
-              var formgroupcol1 = document.createElement('div');
-              formgroupcol1.className = "col-sm-3 my-1";
-              formgroup.appendChild(formgroupcol1);
+            var formgroupcol1 = document.createElement('div');
+            formgroupcol1.className = "col-sm-3 my-1";
+            formgroup.appendChild(formgroupcol1);
 
-              var charselect = document.createElement('select');
-              charselect.id = "characterSelect";
-              charselect.name = "character";
-              charselect.className = "custom-select mr-sm-2";
-              for(let i = 0; i < results.length; i++){
-                  let character = JSON.parse(results[i]);
-                  let entitydata = JSON.parse(character.entitydata);
-                  var charopt = document.createElement('option');
-                  charopt.value = i;
-                  charopt.innerText = character.name;
-                  charselect.appendChild(charopt);
-              }
-              formgroupcol1.appendChild(charselect);
-              
-              var formgroupcol2 = document.createElement('div');
-              formgroupcol2.className = "col-sm-3 my-1";
-              formgroup.appendChild(formgroupcol2);
+            var charselect = document.createElement('select');
+            charselect.id = "characterSelect";
+            charselect.name = "character";
+            charselect.className = "custom-select mr-sm-2";
+            for(let i = 0; i < results.length; i++) {
+                let character = JSON.parse(results[i]);
+                let entitydata = JSON.parse(character.entityData);
+                var charopt = document.createElement('option');
+                charopt.value = i;
+                charopt.innerText = character.name;
+                charselect.appendChild(charopt);
+            }
+            formgroupcol1.appendChild(charselect);
+                  
+            var formgroupcol2 = document.createElement('div');
+            formgroupcol2.className = "col-sm-3 my-1";
+            formgroup.appendChild(formgroupcol2);
 
-              var zoneSel = document.createElement('select');
-              zoneSel.id = "zoneSelector";
-              zoneSel.name = "city";
-              zoneSel.className = "custom-select mr-sm-2";
-              formgroupcol2.appendChild(zoneSel);
-              
-              
-              var formgroupcol3 = document.createElement('div');
-              formgroupcol3.className = "col-sm-3 my-1";
-              formgroup.appendChild(formgroupcol3);
+            var zoneSel = document.createElement('select');
+            zoneSel.id = "zoneSelector";
+            zoneSel.name = "city";
+            zoneSel.className = "custom-select mr-sm-2";
+            formgroupcol2.appendChild(zoneSel);
+                 
+            var formgroupcol3 = document.createElement('div');
+            formgroupcol3.className = "col-sm-3 my-1";
+            formgroup.appendChild(formgroupcol3);
 
-              let button = document.createElement('input');
-              button.value = "Move";
-              button.type = "button";
-              button.className = "btn btn-dark";
-              button.addEventListener("click", moveCharacter);
-              formgroupcol3.appendChild(button);
-              
-              
-              document.getElementById('switchbox').innerHTML = "";
-              document.getElementById('switchbox').appendChild(myForm);
-              cityListPopulate(1);
+            let button = document.createElement('input');
+            button.value = "Move";
+            button.type = "button";
+            button.className = "btn btn-primary";
+            button.addEventListener("click", moveCharacter);
+            formgroupcol3.appendChild(button);
 
-          });
+            document.getElementById('switchbox').innerHTML = "";
+            document.getElementById('switchbox').appendChild(myForm);
+            cityListPopulate(1);
+        }
+    }, function(){
+        document.getElementById('switchbox').innerHTML = "We are unable to display any characters at this time.";
+    });
 }
 
-function getAccountsInfo(){
+function getAccountsInfo()
+{
     var elementAccts = document.getElementById("num_accts");
     var elementChars = document.getElementById("num_chars");
     //fetch("https://segs.verybadpanda.com/assets/includes/getAccounts.php",
@@ -312,38 +355,55 @@ function getAccountsInfo(){
 function moveCharacter()
 {
     var moveForm = document.getElementById('zonemove');
-    var CS = moveForm.zoneSelector;
-    var postBody = {'char' : moveForm.characterSelect.value,
-                    'map' : CS.value};
-    fetch(window.location.origin + "/assets/includes/moveCharacter.php",
-          {method: 'POST',
-           headers:{
-               'charset': 'utf-8',
-               'content-type':'application/json'
-           },
-           body : JSON.stringify(postBody)
-          }
-         ).then(
-             function(myBlob){
-                 return myBlob.json();
-             }).then(
-                 function(results){
-                     if(results.value == 0){
-                         var sb = document.getElementById('switchbox');
-                         var textbox = document.createElement('div');
-                         textbox.innerText = "You successfully moved to ";
-                         var cityname = document.createElement('SPAN');
-                         cityname.style.color = "DarkGreen";
-                         cityname.style.fontWeight = "bold";
-                         cityname.innerText = CS.options[CS.selectedIndex].text;
-                         textbox.append(cityname);
-                         sb.append(textbox);
-                         setTimeout(function (){
-                             sb.removeChild(textbox);
-                         }, 2000);
-                     }
-                 }
-             );
+    var selectedCharacter = moveForm.characterSelect;
+    var selectedZone = moveForm.zoneSelector;
+    console.log("Character: " + selectedCharacter.value);
+    console.log("Zone     : " + selectedZone.value);
+    var postBody = {'char' : selectedCharacter.value, 'map' : selectedZone.value};
+    //     var CS = moveForm.zoneSelector;
+    fetch(window.location.origin + "/assets/includes/moveCharacter.php",{
+        method: 'POST',
+        headers:{
+            'charset': 'utf-8',
+            'content-type':'application/json'
+        },
+        body : JSON.stringify(postBody)
+    }).then(function(myBlob){
+        return myBlob.json();
+    }).then(function(results){
+        var return_message = "";
+        if(results.value == 0){
+            return_message = "You have successfully moved " + 
+                selectedCharacter.options[selectedCharacter.selectedIndex].text + " to " + 
+                selectedZone.options[selectedZone.selectedIndex].text;
+            
+            // var sb = document.getElementById('switchbox');
+            // var textbox = document.createElement('div');
+            // textbox.innerText = "You successfully moved to ";
+            // var cityname = document.createElement('SPAN');
+            // cityname.style.color = "DarkGreen";
+            // cityname.style.fontWeight = "bold";
+            // cityname.innerText = CS.options[CS.selectedIndex].text;
+            // textbox.append(cityname);
+            // sb.append(textbox);
+            // setTimeout(function (){
+            //     sb.removeChild(textbox);
+            // }, 2000);
+        } else {
+            return_message = "There was an problem moving " + 
+                selectedCharacter.options[selectedCharacter.selectedIndex].text + " to " + 
+                selectedZone.options[selectedZone.selectedIndex].text;
+        }
+        
+        try{
+            $("#modal-result").html(return_message);
+            $("#modal-message").modal('show');
+        } catch(e) {
+            window.location.reload();
+        }
+        
+
+    });
     return false;
 }
 
@@ -357,33 +417,29 @@ function checkUsername(usernameMinLength)
     var isAvailable = false;
     var isLongEnough = false;
     var isValid = false;
+    var request = null;
 
     // Check username length
     if(username.length >= usernameMinLength)
     {
         isLongEnough = true;
     }
+    
     changeStatusById("username-requirements-length", isLongEnough);
 
-    console.log(new Date().toUTCString() + " isAvailable: (PRIOR) " + isAvailable.toString());
+    request = checkUsernameAvailability(username);
     
-    var request = checkUsernameAvailability(username);
-    
-    $.when(request).done(function(data)
-    {
-        if(data === 'true')
-        {
+    $.when(request).done(function(data) {
+        if(data === 'true') {
             isAvailable = true;
         }
-        console.log(new Date().toUTCString() + " isAvailable: (DURING) " + isAvailable.toString());
 
-        console.log(new Date().toUTCString() + " isAvailable: (END) " + isAvailable.toString());
         changeStatusById("username-requirements-unique", isAvailable);
         
-        if(isAvailable && isLongEnough)
-        {
+        if(isAvailable && isLongEnough) {
             isValid = true;
         }
+        
         changeStatusById("username-requirements", isValid);
     });
 }
@@ -513,8 +569,8 @@ function checkPassword(str)
 
 function checkPasswords()
 {
-    var username1 = document.getElementById('desired_username');
-    username1.value = username1.value.replace(/^\s+|\s+$/g, "");
+    var username = document.getElementById('desired_username');
+    username.value = username.value.replace(/^\s+|\s+$/g, "");
     var password1 = document.getElementById('password1');
     var password2 = document.getElementById('password2');
     var passwordIsLongEnough = true;
@@ -522,23 +578,19 @@ function checkPasswords()
     var passwordsMatch = true;
     var passwordIsNotUserName = true;
     var passwordIsValid = true;
-
     var isSuccess = true;
-    
     var message = "";
-    if(username1 === null)
-    {
-        username1 = "";
+
+    if(username === null) {
+        username = "";
     }
 
-    if(password1.value === "" ) 
-    {
+    if(password1.value === "" ) {
         passwordIsNotEmpty = false;
         isSuccess =  false;
     }
         
-    if(password2.value === "" ) 
-    {
+    if(password2.value === "" ) {
         passwordIsNotEmpty = false;
         isSuccess =  false;
     }
@@ -554,136 +606,33 @@ function checkPasswords()
         $("#password-status").html("");
     */
     
-    if(!passwordIsNotEmpty || password1.value.length < passwordMinLength)
-    {
+    if(!passwordIsNotEmpty || password1.value.length < passwordMinLength) {
         passwordIsLongEnough = false;
         isSuccess =  false;
     } 
     changeStatusById("password-complex-length", passwordIsLongEnough);
         
-    if(!passwordIsNotEmpty || password1.value !== password2.value)
-    {
+    if(!passwordIsNotEmpty || password1.value !== password2.value) {
         passwordsMatch = false;
         isSuccess =  false;
     }
     changeStatusById("passwords-match", passwordsMatch);
 
-    if(password1.value.toLowerCase() === username1.value.toLowerCase())
-    {
+    if(password1.value.toLowerCase() === username.value.toLowerCase()) {
         passwordIsNotUserName = false;
         isSuccess =  false;
     }
     changeStatusById("password-complex-not-username", passwordIsNotUserName);
 
-    if(!passwordIsNotEmpty || !checkPassword(password1.value))
-    {
+    if(!passwordIsNotEmpty || !checkPassword(password1.value)) {
         passwordIsValid = false;
         isSuccess = false;
     }
     changeStatusById("password-complex-special", passwordIsValid);
-
     changeStatusById("password-complex", isSuccess);
-    // console.log(message);
+
     return isSuccess;
 }
-
-// ///var wsUri = "wss://segs.aruin.com";
-// ///
-// ///
-// /// var output;
-// /// var available_services = ["helloServer", "getVersion", "ping"]; // To add a new service, add to this list.
-// /// 
-// /// function add_services() {
-// ///     var table = document.getElementById("button_table");
-// ///     var i;
-// ///     for (i = 0; i < available_services.length; i++) {
-// ///         var row = table.insertRow(0);
-// ///         var cell1 = row.insertCell(0);
-// ///         var pre = document.createElement("button");
-// ///         pre.setAttribute("id", available_services[i]);
-// ///         pre.setAttribute("class", "service_button");
-// ///         pre.addEventListener('click', function() {
-// ///             makeCall(this.id);
-// ///         }, false);
-// ///         var buttonText = available_services[i];
-// ///         pre.innerHTML = buttonText;
-// ///         cell1.appendChild(pre);
-// ///     }
-// /// }
-// /// 
-// /// function initRpc() {
-// ///     add_services();//
-// ///     output = document.getElementById("output");
-// ///     //openWebSocket();
-// /// }
-// /// 
-// /// function openWebSocket() {
-// ///     websocket = new WebSocket(wsUri);
-// ///     websocket.onopen = function(evt) {
-// ///         onOpen(evt)
-// ///     };
-// ///     websocket.onclose = function(evt) {
-// ///         onClose(evt)
-// ///     };
-// ///     websocket.onmessage = function(evt) {
-// ///         onMessage(evt)
-// ///     };
-// ///     websocket.onerror = function(evt) {
-// ///         onError(evt)
-// ///     };
-// /// }
-// /// 
-// /// function onOpen(evt) {
-// ///     writeToScreen("CONNECTED TO: " + wsUri);
-// /// }
-// /// 
-// /// function makeCall(message) {
-// ///     doSend(message);
-// /// }
-// /// 
-// /// function onClose(evt) {
-// ///     writeToScreen("DISCONNECTED");
-// /// }
-// /// 
-// /// function onMessage(evt) {
-// ///     writeToScreen('<span style="color: blue;">SERVER RESPONSE: ' + evt.data + '</span>');
-// ///     processResponse(evt.data);
-// /// }
-// /// 
-// /// function onError(evt) {
-// ///     writeToScreen('<span style="color: red;">SERVER ERROR:</span> ' + evt.data);
-// /// }
-// /// 
-// /// function processResponse(response) {
-// ///     var obj = JSON.parse(response);
-// ///     result = obj.result;
-// ///     writeToScreen('<span style="color: green;">PROCESSED RESPONSE:</span> ' + result);
-// ///     websocket.close();
-// /// }
-// /// 
-// /// function doSend(message) {
-// ///     var timestamp = new Date().getTime();
-// ///     var request_payload = JSON.stringify({
-// ///         jsonrpc: "2.0",
-// ///         method: message,
-// ///         params: {},
-// ///         id: timestamp
-// ///     });
-// ///     websocket.send(request_payload);
-// ///     writeToScreen("SENT: " + request_payload);
-// /// }
-// /// 
-// /// function writeToScreen(message) {
-// ///     var pre = document.createElement("p");
-// ///     pre.style.wordWrap = "break-word";
-// ///     pre.innerHTML = message;
-// ///     output.appendChild(pre);
-// /// }
-
-//document.addEventListener("load", add_services(), false);
-//document.getElementById("rpc-connect").onclick = function() {
-//    initRpc();
-//};
 
 
 $(".nav .nav-item").on("click", function(){
