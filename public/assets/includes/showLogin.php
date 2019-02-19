@@ -4,13 +4,7 @@
      * http://www.segs.io/
      * Copyright (c) 2006 - 2019 SEGS Team (see AUTHORS.md)
      * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
-     */
-
-    if(!empty($_POST))
-    {
-        // TODO: Figure out what I meant to do here.
-    }
-    
+     */    
 ?>
 <div class="modal-dialog" role="document">
     <form id="modal_form_login" novalidate="novalidate" method="post" onsubmit="return doLogin();">

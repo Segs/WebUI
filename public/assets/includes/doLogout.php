@@ -7,20 +7,24 @@
      */
 
     session_start();
+
+    if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
+        header("Location: https://" . $_SERVER['HTTP_HOST']);
+    }
+
     require_once '../../../config/config.php';
     require_once '../../../vendor/autoload.php';
-    
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
-    
+        
     use Segs\ReturnType;
 
     $result = new ReturnType();
     
-    if(isset($_SESSION['isAuthenticated'])){
+    if(isset($_SESSION['isAuthenticated'])) {
+        if(isset($_SESSION['username'])) {
+            $m_message = ", " . $_SESSION['username'];
+        }
         $result->value = 0;
-        $result->return_message[] = "<div>Goodbye, {$_SESSION['username']}.</div>";
+        $result->return_message[] = "<div>Goodbye{$m_message}.</div>";
         $result->return_message[] = "<div>You have been logged out.</div>";
     } else {
         $result->value = 1;

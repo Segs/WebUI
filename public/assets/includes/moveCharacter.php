@@ -7,21 +7,16 @@
      */
 
     session_start();
-    include_once '../../../config/config.php';
-    require_once '../../../vendor/autoload.php';
-    
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
-
-    use Segs\MiscFunctions;
-    use Segs\ReturnType;
 
     if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
         throw new Exception('Request method must be POST!');
     }
 
-    // require_once '../../../src/functions.php';
+    include_once '../../../config/config.php';
+    require_once '../../../vendor/autoload.php';
+    
+    use Segs\MiscFunctions;
+    use Segs\ReturnType;
 
     function moveCharacter($m_username, $m_character_index, $m_map_index, &$m_result)
     {
@@ -45,7 +40,7 @@
 
             $stmt->bind_param('si', $m_username, $m_character_index);
             if(!$stmt->execute()){
-                $m_result->return_message = "User lookup failed.";
+                $m_result->return_message[] = "<div>User lookup failed.</div>";
                 $m_result->value = 1;
                 $mysqli->close();
                 return $m_result;
@@ -60,7 +55,7 @@
             $decoded->value0->CurrentMap = $m_map_prefix . $m_map_names[$m_map_index];
             $stmt->free_result();
         } else {
-            $m_result->return_message = "Selection preparation failed.";
+            $m_result->return_message[] = "<div>Selection preparation failed.</div>";
             $mysqli->close();
             return $m_result;
         }
@@ -69,16 +64,16 @@
             $encoded = json_encode($decoded,JSON_UNESCAPED_SLASHES);
             $stmnt->bind_param('sii', $encoded, $m_account_id, $m_character_index);
             if(!$stmnt->execute()){
-                $m_result->return_message = "Entitydata insertion failed.";
+                $m_result->return_message[] = "<div>Account update failed.</div>";
                 $m_result->value = 1;
             } else {
-                $m_result->return_message = "Entitydata inserted successfully!";
+                $m_result->return_message[] = "<div></div>Account updated successfully!</div>";
                 $m_result->value = 0;
             }
             $mysqli->close();
             return $m_result;
         } else {
-            $m_result->return_message = "Statement preparation failed: " . $mysqli->errno . " " . $mysqli->error;
+            $m_result->return_message[] = "<div>Statement preparation failed: " . $mysqli->errno . " " . $mysqli->error . "</div>";
                 $m_result->value = 1;
             $mysqli->close();
             return $m_result;
@@ -89,16 +84,22 @@
     $content = trim(file_get_contents("php://input"));
     $decoded = json_decode($content, true);
     $result = new ReturnType();
-    //$_SESSION['user'] = "";
     $character_index = $decoded['char'];
     $map_index = $decoded['map'];
-    if(!isset($_SESSION['username']) || $character_index == null || $map_index == null ){
-        $result->return_message = "No data";
+    if(isset($_SESSION['username']) && $_SESSION['username'] !== "" ) {
+        $user_name = $_SESSION['username'];
+    } else {
+        $user_name = null;
+    }
+    
+    if($user_name == null || $character_index == null || $map_index == null ){
+        $result->return_message[] = "<div>No data returned.</div>";
         $result->value = 1;
     } else {
-        moveCharacter($_SESSION['username'], $character_index, $map_index, $result);
+        moveCharacter($user_name, $character_index, $map_index, $result);
+        $result->value = 0;
+        $result->return_message[] = "<div>The character with index '{$character_index}' has been moved to map with index '{$map_index}'.</div>";
     }
-    // moveCharacter($_SESSION['username'], 0, 3, $result);
 
     echo json_encode($result);
 

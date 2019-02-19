@@ -371,11 +371,12 @@ function moveCharacter()
     }).then(function(myBlob){
         return myBlob.json();
     }).then(function(results){
-        var return_message = "";
+        var return_message = new Array();
         if(results.value == 0){
-            return_message = "You have successfully moved " + 
+            return_message.push(results.return_message);
+            return_message.push("<div>You have successfully moved " + 
                 selectedCharacter.options[selectedCharacter.selectedIndex].text + " to " + 
-                selectedZone.options[selectedZone.selectedIndex].text;
+                selectedZone.options[selectedZone.selectedIndex].text + ".</div>");
             
             // var sb = document.getElementById('switchbox');
             // var textbox = document.createElement('div');
@@ -390,9 +391,10 @@ function moveCharacter()
             //     sb.removeChild(textbox);
             // }, 2000);
         } else {
-            return_message = "There was an problem moving " + 
+            return_message.push(results.return_message);
+            return_message.push("<div>There was an problem moving " + 
                 selectedCharacter.options[selectedCharacter.selectedIndex].text + " to " + 
-                selectedZone.options[selectedZone.selectedIndex].text;
+                selectedZone.options[selectedZone.selectedIndex].text + ".</div>");
         }
         
         try{

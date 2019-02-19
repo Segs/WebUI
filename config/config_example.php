@@ -12,9 +12,9 @@
     $site_url                   = "https://segs.io";
     $site_logo                  = "https://github.com/Segs/Segs/raw/develop/docs/segs-medallion-med.png";
     $site_admin                 = "webmaster@example.com";
-    /*
-        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-        Tip 2: you can also add an image using data-image tag
+	/*
+		You can change some of the WebUI colors to the following:
+        "dark | gold | purple | azure | green | orange | danger"
     */
     $site_color                 = "gold";
     $site_navbar_title          = "SEGS WebUI";
@@ -26,6 +26,12 @@
     $accdb                      = "segs";
     $chardb                     = "segs_game";
 
+    // User Account Settings;
+    $min_username_len           = 6;
+    $min_password_len           = 6;
+    $complex_password           = true;
+    $login_users_on_create      = true;
+    
     // WebSocket connection
     $ws_target                  = "ws://localhost/";
     $ws_port                    = 6001;
@@ -33,5 +39,3 @@
 
     // Date and Time
     $timezone                   = "UTC";
-
-?>
