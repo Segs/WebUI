@@ -86,16 +86,23 @@ function doLogout()
 {
     fetch("/assets/includes/doLogout.php",{
         method: 'GET'
-    }).then(function(myBlob){
-        return myBlob.json();
-    }).then(function(result){
-        try{
-            $("#modal-result").html(result.return_message);
-            $("#modal-message").modal('show');
-        } catch(e) {
-            window.location.reload();
-        }
-    });
+    })
+        .then(myBlob => myBlob.json())
+        .then(function(result){
+            m_status = false;
+            try {
+                $("#modal-result").html(result.return_message);
+                $("#modal-message").modal('show');
+                m_status = true;
+            } catch(e) {
+                window.location.reload();
+                m_status = false;
+            }
+            return m_status;
+        })
+        .catch(function(error) {
+            console.log(new Date().toUTCString() + " " + error); 
+        });
     return true;
 }
 
@@ -106,7 +113,7 @@ function doSignup()
     var body_content = {'username': form_data.desired_username.value,
                         'password1': form_data.password1.value,
                         'password2': form_data.password2.value};
-	//$("#modal-login").modal('hide');
+
     fetch("/assets/includes/createUser.php",
     {
         method: 'POST',
@@ -122,7 +129,7 @@ function doSignup()
                 $("#modal-message").modal('show');
                 m_status = true;
             } catch(e) {
-                //window.location.reload();
+                window.location.reload();
                 m_status = false;
             }
             return m_status;
@@ -132,22 +139,6 @@ function doSignup()
         });
     return false;
 }
-
-/*
-//function accountsInfo(){
-//    var elementAccts = document.getElementById("num_accts");
-//    var elementChars = document.getElementById("num_chars");
-//    fetch("/WebUI2/src/acc_count.php",
-//          {method: 'GET'
-//          }).then(function(myBlob){
-//              return myBlob.json();
-//          }).then(function(data){
-//              console.log(data);
-//              elementAccts.innerHTML = data.num_accts;
-//              elementChars.innerHTML = data.num_chars;
-//          });
-//}
-*/
 
 /*menu handler*/
 //$(function(){
@@ -341,7 +332,6 @@ function getAccountsInfo()
 {
     var elementAccts = document.getElementById("num_accts");
     var elementChars = document.getElementById("num_chars");
-    //fetch("https://segs.verybadpanda.com/assets/includes/getAccounts.php",
     fetch(window.location.origin + "/assets/includes/getAccounts.php",
           {method: 'GET'
           }).then(function(myBlob){
@@ -360,7 +350,6 @@ function moveCharacter()
     console.log("Character: " + selectedCharacter.value);
     console.log("Zone     : " + selectedZone.value);
     var postBody = {'char' : selectedCharacter.value, 'map' : selectedZone.value};
-    //     var CS = moveForm.zoneSelector;
     fetch(window.location.origin + "/assets/includes/moveCharacter.php",{
         method: 'POST',
         headers:{
@@ -372,26 +361,15 @@ function moveCharacter()
         return myBlob.json();
     }).then(function(results){
         var return_message = new Array();
+        for (var i = 0, len = results.return_message.length; i < len; i++) {
+            return_message.push(results.return_message[i]);
+        }
+        
         if(results.value == 0){
-            return_message.push(results.return_message);
             return_message.push("<div>You have successfully moved " + 
                 selectedCharacter.options[selectedCharacter.selectedIndex].text + " to " + 
                 selectedZone.options[selectedZone.selectedIndex].text + ".</div>");
-            
-            // var sb = document.getElementById('switchbox');
-            // var textbox = document.createElement('div');
-            // textbox.innerText = "You successfully moved to ";
-            // var cityname = document.createElement('SPAN');
-            // cityname.style.color = "DarkGreen";
-            // cityname.style.fontWeight = "bold";
-            // cityname.innerText = CS.options[CS.selectedIndex].text;
-            // textbox.append(cityname);
-            // sb.append(textbox);
-            // setTimeout(function (){
-            //     sb.removeChild(textbox);
-            // }, 2000);
         } else {
-            return_message.push(results.return_message);
             return_message.push("<div>There was an problem moving " + 
                 selectedCharacter.options[selectedCharacter.selectedIndex].text + " to " + 
                 selectedZone.options[selectedZone.selectedIndex].text + ".</div>");

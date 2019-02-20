@@ -43,7 +43,6 @@
                                     "INNER JOIN " . $accdb . ".accounts as b ON a.account_id = b.id " .
                                     "WHERE b.username = ?")){
             $stmt->bind_param('s', $_SESSION['username']);
-            //$stmt->bind_param('s',$testuser);
             $stmt->execute();
             $stmt->bind_result($char_name, $entity_data);
             while($stmt->fetch()){

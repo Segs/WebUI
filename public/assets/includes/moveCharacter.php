@@ -67,7 +67,7 @@
                 $m_result->return_message[] = "<div>Account update failed.</div>";
                 $m_result->value = 1;
             } else {
-                $m_result->return_message[] = "<div></div>Account updated successfully!</div>";
+                $m_result->return_message[] = "<div>Account updated successfully!</div>";
                 $m_result->value = 0;
             }
             $mysqli->close();
@@ -98,7 +98,6 @@
     } else {
         moveCharacter($user_name, $character_index, $map_index, $result);
         $result->value = 0;
-        $result->return_message[] = "<div>The character with index '{$character_index}' has been moved to map with index '{$map_index}'.</div>";
     }
 
     echo json_encode($result);
