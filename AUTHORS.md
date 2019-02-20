@@ -1,8 +1,10 @@
-#SEGS WebUI
+# SEGS WebUI
 
 Originally created by:
-* dracc
-* mobbyg
+- dracc
+- mobbyg
 
 Updated with bootstrap by:
-* whitegryphon
+- whitegryphon
+
+&copy; 2019 SEGS Team

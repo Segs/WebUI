@@ -1,25 +1,23 @@
-#SEGS WebUI Licenses
+# SEGS WebUI Licenses
 
 [SEGS WebUI](#segs-webui)  
 [Other Licenses](#other-licenses)  
 
+## SEGS WebUI
+
+### BSD 3-Clause License
 
 
-##SEGS WebUI
-###BSD 3-Clause License
+&copy; 2019 SEGS Team
 
-
-Copyright (c) 2018, SEGS  
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 
-* Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
-* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
-* Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived fromthis software without specific prior written permission.
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+- Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived fromthis software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -32,12 +30,13 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-##Other Licenses
+## Other Licenses
 
-###MIT License
+### MIT License
+
 Parts of this project have been included under the MIT license.
 
-###Material Dashboard by Creative Tim
+### Material Dashboard by Creative Tim
+
 Homepage: https://www.creative-tim.com/product/material-dashboard  
 License: https://github.com/timcreative/freebies/blob/master/LICENSE.md  
-
