@@ -8,11 +8,10 @@ namespace Segs;
 class DatabaseConnection
 {
     private $conn;
-    public function __construct($dbhost, $dbuser, $dbpass, $database)
+    public function __construct($dbhost, $dbuser, $dbpass, $database, $dbport)
     {
-        $this->conn = $this->connectDatabase($dbhost, $dbuser, $dbpass, $database);
-        if(!empty($this->conn))
-        {
+        $this->conn = $this->connectDatabase($dbhost, $dbuser, $dbpass, $database, $dbport);
+        if(!empty($this->conn)) {
             try {
 				$this->selectDatabase($database);
 				return true;
@@ -23,12 +22,9 @@ class DatabaseConnection
 		return false;
     }
      
-    function connectDatabase($dbhost, $dbuser, $dbpass, $database)
+    function connectDatabase($dbhost, $dbuser, $dbpass, $database, $dbport)
     {
-        #global $dbhost;     //database hostname
-        #global $dbuser;     //database username
-        #global $dbpass;     //database password
-        $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $database);
+        $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $database, $dbport);
         return $conn;
     }
     
@@ -46,9 +42,7 @@ class DatabaseConnection
 
     public function prepareStatement($statement)
     {
-        //global $conn;
         return $this->conn->prepare($statement);
-        //return $conn;
     }
 	
 	public function closeConnection() {

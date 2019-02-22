@@ -22,8 +22,8 @@
 
     function loginUser($m_username, $m_password, &$m_result){
 		$miscFunctions = new MiscFunctions();
-		global $dbhost, $dbuser, $dbpass, $accdb;
-		$databaseConnection =  new DatabaseConnection($dbhost, $dbuser, $dbpass, $accdb);
+		global $dbhost, $dbuser, $dbpass, $accdb, $dbport;
+		$databaseConnection =  new DatabaseConnection($dbhost, $dbuser, $dbpass, $accdb, $dbport);
 		if($databaseConnection) {
 			if($stmt = $databaseConnection->prepareStatement("SELECT passw, salt FROM accounts WHERE username = ?")){
 				$stmt->bind_param('s', $m_username);
@@ -52,7 +52,6 @@
 			$m_result->return_message[] = "<div>Failed to connect to database.</div>";
 			return $m_result;
 		}
-        //$mysqli = new mysqli($dbhost, $dbuser, $dbpass, $accdb);
         return $m_result;
     }
 

@@ -7,19 +7,19 @@
      */
 
     session_start();
-
+    
     if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
         header("Location: https://" . $_SERVER['HTTP_HOST']);
     }
-
+    
     header('Content-Type: application/json');
-
+    
     require '../../../vendor/autoload.php';
     require '../../../config/config.php';
-
+    
     use Segs\DatabaseConnection;
 
-    $db_conn = new DatabaseConnection($dbhost, $dbuser, $dbpass, $accdb);
+    $db_conn = new DatabaseConnection($dbhost, $dbuser, $dbpass, $accdb, $dbport);
 
     if(!empty($_POST["username"]))
     {

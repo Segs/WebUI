@@ -42,8 +42,8 @@ function updateModal(m_pageName)
 function doLogin()
 {
     var form_data = document.getElementById("modal_form_login");
-    var body_content = { 'username' : form_data.modal_login_username.value,
-                    'password' : form_data.modal_login_password.value};
+    var body_content = {'username' : form_data.modal_login_username.value,
+                        'password' : form_data.modal_login_password.value};
 	$("#modal-login").modal('hide');
     fetch("/assets/includes/doLogin.php",{
         method: 'POST',
@@ -57,7 +57,7 @@ function doLogin()
             return myBlob.json();
     })
         .then(function(result){
-            try{
+            try {
                 $("#modal-result").html(result.return_message);
                 $("#modal-message").modal('show');
             } catch(e) {
@@ -113,7 +113,6 @@ function doSignup()
     var body_content = {'username': form_data.desired_username.value,
                         'password1': form_data.password1.value,
                         'password2': form_data.password2.value};
-
     fetch("/assets/includes/createUser.php",
     {
         method: 'POST',
@@ -153,17 +152,6 @@ function stripTrailingSlash(str)
 var url = window.location.pathname;
 var activePage = stripTrailingSlash(url);
 
-/*
-  $('.nav li a').each(function(){  
-    var currentPage = stripTrailingSlash($(this).attr('href'));
-
-    if (activePage == currentPage) {
-      $(this).parent().addClass('active'); 
-    } 
-  });
-//});
-*/  
-
 function setActiveItem()
 {
     var path = window.location.pathname;
@@ -194,7 +182,8 @@ function setCookie(cookieName, cookieValue, expirationInDays)
     document.cookie = cookieName + "=" + newCookieValue;
 }
 
-$(function() {
+$(function()
+{
 	// retrieve cookie value on page load
 	var activePage = getCookie("CurrentPage");
 	var $menuItem;
@@ -253,9 +242,7 @@ var entities;
 
 function doZoneSwitch() 
 {
-    var bodycontent = {
-        'user': ''
-    }
+    var bodycontent = {'user': ''}
     fetch(window.location.origin + "/assets/includes/getCharacters.php",{
         method: 'POST',
         headers: {
@@ -263,69 +250,69 @@ function doZoneSwitch()
             'content-type': 'application/json'
         },
         body: JSON.stringify(bodycontent)
-    }).then(function(myBlob){
-        return myBlob.json();
-    }).then(function(results){
-        if(results.length == 0){
-            document.getElementById('switchbox').innerHTML = "You do not currently have any heroes on this server.<br>Once you have logged in and created one, you will see them here.";
-        } else {
-            entities = results;
-            var myForm = document.createElement('form');
-            myForm.name = "zonemove";
-            myForm.id = "zonemove";
-            myForm.setAttribute("onSubmit", "return moveCharacter()");
-            myForm.method = "POST";
-            
-            var formgroup = document.createElement('div');
-            formgroup.className = "form-row align-items-center";
-            myForm.appendChild(formgroup);
+    })
+        .then(myBlob => myBlob.json())
+        .then(function(results){
+            if(results.length == 0){
+                document.getElementById('switchbox').innerHTML = "You do not currently have any heroes on this server.<br>Once you have logged in and created one, you will see them here.";
+            } else {
+                entities = results;
+                var myForm = document.createElement('form');
+                myForm.name = "zonemove";
+                myForm.id = "zonemove";
+                myForm.setAttribute("onSubmit", "return moveCharacter()");
+                myForm.method = "POST";
+                
+                var formgroup = document.createElement('div');
+                formgroup.className = "form-row align-items-center";
+                myForm.appendChild(formgroup);
 
-            var formgroupcol1 = document.createElement('div');
-            formgroupcol1.className = "col-sm-3 my-1";
-            formgroup.appendChild(formgroupcol1);
+                var formgroupcol1 = document.createElement('div');
+                formgroupcol1.className = "col-sm-3 my-1";
+                formgroup.appendChild(formgroupcol1);
 
-            var charselect = document.createElement('select');
-            charselect.id = "characterSelect";
-            charselect.name = "character";
-            charselect.className = "custom-select mr-sm-2";
-            for(let i = 0; i < results.length; i++) {
-                let character = JSON.parse(results[i]);
-                let entitydata = JSON.parse(character.entityData);
-                var charopt = document.createElement('option');
-                charopt.value = i;
-                charopt.innerText = character.name;
-                charselect.appendChild(charopt);
+                var charselect = document.createElement('select');
+                charselect.id = "characterSelect";
+                charselect.name = "character";
+                charselect.className = "custom-select mr-sm-2";
+                for(let i = 0; i < results.length; i++) {
+                    let character = JSON.parse(results[i]);
+                    let entitydata = JSON.parse(character.entityData);
+                    var charopt = document.createElement('option');
+                    charopt.value = i;
+                    charopt.innerText = character.name;
+                    charselect.appendChild(charopt);
+                }
+                formgroupcol1.appendChild(charselect);
+                      
+                var formgroupcol2 = document.createElement('div');
+                formgroupcol2.className = "col-sm-3 my-1";
+                formgroup.appendChild(formgroupcol2);
+
+                var zoneSel = document.createElement('select');
+                zoneSel.id = "zoneSelector";
+                zoneSel.name = "city";
+                zoneSel.className = "custom-select mr-sm-2";
+                formgroupcol2.appendChild(zoneSel);
+                     
+                var formgroupcol3 = document.createElement('div');
+                formgroupcol3.className = "col-sm-3 my-1";
+                formgroup.appendChild(formgroupcol3);
+
+                let button = document.createElement('input');
+                button.value = "Move";
+                button.type = "button";
+                button.className = "btn btn-primary";
+                button.addEventListener("click", moveCharacter);
+                formgroupcol3.appendChild(button);
+
+                document.getElementById('switchbox').innerHTML = "";
+                document.getElementById('switchbox').appendChild(myForm);
+                cityListPopulate(1);
             }
-            formgroupcol1.appendChild(charselect);
-                  
-            var formgroupcol2 = document.createElement('div');
-            formgroupcol2.className = "col-sm-3 my-1";
-            formgroup.appendChild(formgroupcol2);
-
-            var zoneSel = document.createElement('select');
-            zoneSel.id = "zoneSelector";
-            zoneSel.name = "city";
-            zoneSel.className = "custom-select mr-sm-2";
-            formgroupcol2.appendChild(zoneSel);
-                 
-            var formgroupcol3 = document.createElement('div');
-            formgroupcol3.className = "col-sm-3 my-1";
-            formgroup.appendChild(formgroupcol3);
-
-            let button = document.createElement('input');
-            button.value = "Move";
-            button.type = "button";
-            button.className = "btn btn-primary";
-            button.addEventListener("click", moveCharacter);
-            formgroupcol3.appendChild(button);
-
-            document.getElementById('switchbox').innerHTML = "";
-            document.getElementById('switchbox').appendChild(myForm);
-            cityListPopulate(1);
-        }
-    }, function(){
-        document.getElementById('switchbox').innerHTML = "We are unable to display any characters at this time.";
-    });
+        }, function(){
+            document.getElementById('switchbox').innerHTML = "We are unable to display any characters at this time.";
+        });
 }
 
 function getAccountsInfo()
@@ -387,9 +374,6 @@ function moveCharacter()
     return false;
 }
 
-
-var passwordMinLength = 6;
-
 function checkUsername(usernameMinLength)
 {
     var formdata = document.getElementById('form_register');
@@ -398,7 +382,7 @@ function checkUsername(usernameMinLength)
     var isLongEnough = false;
     var isValid = false;
     var request = null;
-
+    
     // Check username length
     if(username.length >= usernameMinLength)
     {
@@ -413,13 +397,11 @@ function checkUsername(usernameMinLength)
         if(data === 'true') {
             isAvailable = true;
         }
-
         changeStatusById("username-requirements-unique", isAvailable);
         
         if(isAvailable && isLongEnough) {
             isValid = true;
         }
-        
         changeStatusById("username-requirements", isValid);
     });
 }
@@ -456,6 +438,9 @@ function checkUsernameAvailability(username)
 
 function checkAvailability(usernameMinLength)
 {
+    if(usernameMinLength < 1) {
+        usernameMinLength = 1;
+    }
     var formdata = document.getElementById('form_register');
     var username = formdata.desired_username.value;
     username = username.replace(/^\s+|\s+$/g, "");
@@ -536,18 +521,14 @@ function changeStatusById(entityId, isEnabled)
     }
 }
 
-function checkPassword(str)
+function checkPassword(str, passwordMinLength)
 {
-    //var pattern = "^(?=.*\\d).{" + passwordMinLength.toString() + ",}$";
     var pattern = "^^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$^+=!*()@%&]).{" + passwordMinLength.toString() + ",}$";
-    //^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,50}$
-    //var pattern = "^(?=.*\\d).{6,}$"; //[!@#$%^&*(),.?":{}|<>]
-    //var re = /^(?=.*\d).{6,}$/;
     var re = new RegExp(pattern);
     return re.test(str);
 }
 
-function checkPasswords()
+function checkPasswords(passwordMinLength, passwordComplexity)
 {
     var username = document.getElementById('desired_username');
     username.value = username.value.replace(/^\s+|\s+$/g, "");
@@ -565,12 +546,12 @@ function checkPasswords()
         username = "";
     }
 
-    if(password1.value === "" ) {
+    if(passwordMinLength > 0 && password1.value === "") {
         passwordIsNotEmpty = false;
         isSuccess =  false;
     }
         
-    if(password2.value === "" ) {
+    if(passwordMinLength > 0 && password2.value === "") {
         passwordIsNotEmpty = false;
         isSuccess =  false;
     }
@@ -604,9 +585,11 @@ function checkPasswords()
     }
     changeStatusById("password-complex-not-username", passwordIsNotUserName);
 
-    if(!passwordIsNotEmpty || !checkPassword(password1.value)) {
-        passwordIsValid = false;
-        isSuccess = false;
+    if(!passwordIsNotEmpty && (passwordComplexity != "false" && passwordMinLength > 4)) {
+        if(!checkPassword(password1.value, passwordMinLength)) {
+            passwordIsValid = false;
+            isSuccess = false;
+        }
     }
     changeStatusById("password-complex-special", passwordIsValid);
     changeStatusById("password-complex", isSuccess);

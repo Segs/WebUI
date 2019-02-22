@@ -20,8 +20,8 @@
 
     function moveCharacter($m_username, $m_character_index, $m_map_index, &$m_result)
     {
-        global $dbhost, $dbuser, $dbpass, $accdb, $chardb;
-        $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $chardb);
+        global $dbhost, $dbuser, $dbpass, $accdb, $chardb, $dbport;
+        $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $chardb, $dbport);
         if($mysqli->connect_errno){
             $m_result->return_message = "Failed to connect to db.";
             $mysqli->close();

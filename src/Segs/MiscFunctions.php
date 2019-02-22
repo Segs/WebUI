@@ -19,7 +19,7 @@
 
         function debugToConsole( $data )
         {
-            if ( is_array( $data ) ) {
+            if(is_array( $data )) {
                 $output = "<script>console.log( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
             } else {
                 $output = "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
@@ -58,7 +58,7 @@
             $return_value = new ReturnType();
             $hashed_pass_bytearr = $this->hashPassword($m_password, $sample_salt);
             if($hashed_pass_bytearr !== null) {
-                $db_conn = new DatabaseConnection($dbhost, $dbuser, $dbpass, $accdb);
+                $db_conn = new DatabaseConnection($dbhost, $dbuser, $dbpass, $accdb, $dbport);
                 if($stmt = $db_conn->prepareStatement("INSERT INTO accounts(username, passw, salt) VALUES(?, ?, ?)")) {
                     $stmt->bind_param('sss', $m_username, $hashed_pass_bytearr, $sample_salt);
                     if(!$stmt->execute()) {
@@ -80,7 +80,7 @@
         {
             include '../../../config/config.php';
             echo $dbhost;
-            $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $accdb);
+            $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $accdb, $dbport);
             if ($mysqli->connect_errno) {
                 echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
             }

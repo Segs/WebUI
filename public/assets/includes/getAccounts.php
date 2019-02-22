@@ -8,9 +8,9 @@
     
     session_start();
 
-    // if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
-    //     header("Location: https://" . $_SERVER['HTTP_HOST']);
-    // }
+    //if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
+    //    header("Location: https://" . $_SERVER['HTTP_HOST']);
+    //}
 
     require_once '../../../config/config.php';
 
@@ -19,7 +19,7 @@
         public $num_chars = 0;
     }
 
-    $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $accdb);
+    $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $accdb, $dbport);
     $ret = new retdata();
     $ret->num_accts = $mysqli->query("select id from accounts")->num_rows;
     $mysqli->select_db($chardb);

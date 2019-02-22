@@ -31,8 +31,8 @@
 
     function getCharacters()
     {
-		global $dbhost, $dbuser, $dbpass, $accdb, $chardb;
-        $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $chardb);
+		global $dbhost, $dbuser, $dbpass, $accdb, $chardb, $dbport;
+        $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $chardb, $dbport);
         $result = array();
 
         if($mysqli->connect_errno){

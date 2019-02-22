@@ -19,11 +19,11 @@ require '../config/config.php';
                             <p><span id="user-availability-status"></span><img src="/assets/img/LoaderIcon.gif" id="loaderIcon" style="display:none" /></p>
                             <div class="form-group">
                                 <label for="password1">Password</label>
-                                <input type="password" class="form-control" id="password1" placeholder="Enter your password" required onBlur="checkPasswords()">
+                                <input type="password" class="form-control" id="password1" placeholder="Enter your password" required onBlur="checkPasswords(<?php echo $min_password_len; ?>, <?php echo $complex_password; ?>)">
                             </div>
                             <div class="form-group">
                                 <label for="password2">Confimation Password</label>
-                                <input type="password" class="form-control" id="password2" placeholder="Confim your password" required onChange="checkPasswords()">
+                                <input type="password" class="form-control" id="password2" placeholder="Confim your password" required onChange="checkPasswords(<?php echo $min_password_len; ?>, <?php echo $complex_password; ?>)">
                             </div>
                             <!--
                             <div class="form-check">
@@ -38,18 +38,24 @@ require '../config/config.php';
                         <div id="alert-username" class="alert alert-light"><i class="fas fa-check-square-o"></i> Username is unique</div>
                         -->
                         <div class="list-group">
-                            <div id="username-requirements"                  class="list-group-item py-0"><i id="icon-username-requirements"                class="far fa-square"></i> Username requirements:
+                            <div id="username-requirements" class="list-group-item py-0"><i id="icon-username-requirements" class="far fa-square"></i> Username requirements:
                                 <div class="list-group">
-                                    <div id="username-requirements-unique"   class="list-group-item py-0"><i id="icon-username-requirements-unique"                class="far fa-square"></i> ...is unique.</div>
-                                    <div id="username-requirements-length"   class="list-group-item py-0"><i id="icon-username-requirements-length"                class="far fa-square"></i> ...is longer that <?php echo $min_username_len; ?> characters.</div>
+                                    <div id="username-requirements-unique" class="list-group-item py-0"><i id="icon-username-requirements-unique" class="far fa-square"></i> ...is unique.</div>
+                                    <?php if($min_username_len > 1) { ?>
+                                    <div id="username-requirements-length" class="list-group-item py-0"><i id="icon-username-requirements-length" class="far fa-square"></i> ...is longer that <?php echo $min_username_len; ?> characters.</div>
+                                    <?php } ?>
                                 </div>
                             </div>
-                            <div id="passwords-match"                        class="list-group-item py-0"><i id="icon-passwords-match"                class="far fa-square"></i> Passwords match</div>
-                            <div id="password-complex"                       class="list-group-item py-0"><i id="icon-password-complex"               class="far fa-square"></i> Password requirements:
+                            <div id="passwords-match" class="list-group-item py-0"><i id="icon-passwords-match" class="far fa-square"></i> Passwords match</div>
+                            <div id="password-complex" class="list-group-item py-0"><i id="icon-password-complex" class="far fa-square"></i> Password requirements:
                                 <div class="list-group">
-                                    <div id="password-complex-not-username"  class="list-group-item py-0"><i id="icon-password-complex-not-username"  class="far fa-square"></i> ...is not the same as the username.</div>
-                                    <div id="password-complex-length"        class="list-group-item py-0"><i id="icon-password-complex-length"        class="far fa-square"></i> ...is longer that <?php echo $min_password_len; ?> characters.</div>
-                                    <div id="password-complex-special"       class="list-group-item py-0"><i id="icon-password-complex-special"       class="far fa-square"></i> ...meets character requirements.</div>
+                                    <div id="password-complex-not-username" class="list-group-item py-0"><i id="icon-password-complex-not-username"  class="far fa-square"></i> ...is not the same as the username.</div>
+                                    <?php if($min_password_len > 1) { ?>
+                                    <div id="password-complex-length" class="list-group-item py-0"><i id="icon-password-complex-length" class="far fa-square"></i> ...is longer that <?php echo $min_password_len; ?> characters.</div>
+                                    <?php } ?>
+                                    <?php if($complex_password) { ?>
+                                    <div id="password-complex-special" class="list-group-item py-0"><i id="icon-password-complex-special" class="far fa-square"></i> ...meets character requirements.</div>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -60,4 +66,6 @@ require '../config/config.php';
         </div>
     </div>
 </div>
+<?php if($warn_pwned_password) { ?>
 <script src="https://cdn.passprotect.io/passprotect.min.js"></script>
+<?php } ?>
