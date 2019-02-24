@@ -88,7 +88,7 @@
       return $retval;
     }
 
-    $data = "{ \"jsonrpc\":\"2.0\", \"method\":\"getStartTime\", \"params\": {}, \"id\": 1 }";
+    $data = "{ \"jsonrpc\":\"2.0\", \"method\":\"getWebUIData\", \"params\": {}, \"id\": 1 }";
 
     // Send TCP data
     socket_write($socket, $data, strlen($data));
