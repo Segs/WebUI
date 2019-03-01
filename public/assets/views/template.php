@@ -6,14 +6,17 @@
      * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
      */
 
-    $page_title = "Reset Password";
-    $page_summary = "Reset your password if you forgot it.";
+    $page_title = "Title of Page";
+    $page_summary = "A short summary of the page.";
 
     require "partials/page_top.php";
 ?>
                 <div class="row">
                     <div class="col-md-12">
-                        <p>Unfortunately, this feature has not been implemented yet.</p>
+                        <!--
+                        This is where the code for the new page would go. See Bootstrap documentation for more
+                        information on using the grid system: https://getbootstrap.com/docs/4.0/layout/grid/
+                        -->
                     </div>
                 </div>
 <?php require_once "partials/page_bottom.php"; ?>
