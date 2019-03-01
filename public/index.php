@@ -74,7 +74,7 @@
                         <?php } ?>
                     </h3>
                      <!-- Navbar -->
-                    <nav class="navbar navbar-transparent">
+                    <nav class="navbar navbar-expand-lg navbar-transparent">
                         <ul class="navbar-nav">
                             <li class="nav-item"><!--  -->
                                 <?php if(isset($_SESSION['isAuthenticated'])) { ?>
