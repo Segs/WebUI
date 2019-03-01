@@ -27,6 +27,12 @@
             </a>
         </li>
         <!--
+        <li id="menu_files" class="nav-item ">
+            <a class="nav-link" href="?page=template.php">
+                <i class="fab fa-file"></i>
+                <p>Menu Name</p>
+            </a>
+        </li>
 		-->
     </ul>
 
