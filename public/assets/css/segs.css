@@ -46,8 +46,9 @@
 .addScroll {
     overflow-y: auto;
     overflow-x: none;
-    height: 90vh;
+    min-height: calc(100vh - 75px);
     /*
+    height: 90vh;
     max-height: 90vh;
     */
 }
@@ -84,4 +85,5 @@
 
 .segs-content {
     margin-top: 0px !important;
+    min-height: calc(100vh - 185px) !important;
 }

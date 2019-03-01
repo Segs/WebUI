@@ -5,40 +5,6 @@
  * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
  */
 
-function makeRequest(m_elementId, m_page, m_function)
-{
-	var httpRequest;
-	var m_docElement = document.getElementById(m_elementId);
-    httpRequest = new XMLHttpRequest();
-    httpRequest.onreadystatechange = function(){
-		if (this.readyState === 4 && this.status === 200){
-			m_function(m_docElement, httpRequest);
-		}
-	};
-    httpRequest.open('GET', m_page);
-    httpRequest.send();
-}
-	
-function showContents(m_docElement, m_httpRequest)
-{
-	m_docElement.innerHTML = m_httpRequest.responseText;
-}
-
-function updateMain(m_pageName)
-{
-    var m_view_file;
-    m_view_file = 'assets/views/' + m_pageName + '.php'
-    makeRequest('main-content', m_view_file, showContents);
-    setCookie("CurrentPage", m_pageName, 1);
-}
-
-function updateModal(m_pageName)
-{
-    var m_include_file;
-    m_include_file = 'assets/includes/' + m_pageName + '.php'
-    makeRequest('modal-content', m_include_file, showContents);
-}
-
 function doLogin()
 {
     var form_data = document.getElementById("modal_form_login");
@@ -145,15 +111,6 @@ function stripTrailingSlash(str)
         return str.substr(0, str.length - 1);
     }
     return str;
-}
-
-function setActiveItem()
-{
-    var path = window.location.pathname;
-    console.log(path);
-    path = path.replace(/\/$/,"");
-    console.log(path);
-    path = decodeURIComponent(path)
 }
 
 function getCookie(cookieName)
@@ -522,71 +479,6 @@ function checkUsernameAvailability(username)
     return $.ajax(ajaxCall);
 }
 
-function checkAvailability(usernameMinLength)
-{
-    if(usernameMinLength < 1) {
-        usernameMinLength = 1;
-    }
-    var formdata = document.getElementById('form_register');
-    var username = formdata.desired_username.value;
-    username = username.replace(/^\s+|\s+$/g, "");
-    var isAvailable = false;
-    var isLongEnough = false;
-    var isValid = false;
-
-    // Check username length
-    if(username.length >= usernameMinLength)
-    {
-        isLongEnough = true;
-    }
-    changeStatusById("username-requirements-length", isLongEnough);
-
-    // If username length is OK, check username availability
-    username = "username=" + username;
-    jQuery.ajax({
-        url: "/assets/includes/checkAvailability.php",
-        data: username,
-        type: "POST",
-        success:function(data){
-            //returns false if username exists.
-            console.log(new Date().toUTCString() + " data       : " + data);
-            if(data !== null)
-            {
-                result = data;
-            } else {
-                result = "";
-            }
-            console.log(new Date().toUTCString() + " result     : " + result);
-            
-            if(result === 'true')
-            {
-                isAvailable = true;
-                console.log(new Date().toUTCString() + " isAvailable: true");
-            }
-            else
-            {
-                isAvailable = false;
-                console.log(new Date().toUTCString() + " isAvailable: false");
-            }
-            console.log(new Date().toUTCString() + " isAvailable: (SUCCESS) " + isAvailable.toString());
-        },
-        error:function(data){
-            isAvailable = false;
-            console.log(new Date().toUTCString() + " isAvailable: (ERROR) " + isAvailable.toString());
-            $("#user-availability-status").html('Error:' + data.responseText);
-        }
-    });
-    console.log(new Date().toUTCString() + " isAvailable: (END) " + isAvailable.toString());
-    changeStatusById("username-requirements-unique", isAvailable);
-
-    
-    if(isAvailable && isLongEnough)
-    {
-        isValid = true;
-    }
-    changeStatusById("username-requirements", isValid);
-}
-
 function changeStatusById(entityId, isEnabled)
 {   
     divEntityId = "#" + entityId
@@ -607,11 +499,11 @@ function changeStatusById(entityId, isEnabled)
     }
 }
 
-function checkPassword(str, passwordMinLength)
+function checkPasswordComplexity(password, passwordMinLength)
 {
     var pattern = "^^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$^+=!*()@%&]).{" + passwordMinLength.toString() + ",}$";
     var re = new RegExp(pattern);
-    return re.test(str);
+    return re.test(password);
 }
 
 function checkPasswords(passwordMinLength, passwordComplexity)
@@ -642,17 +534,6 @@ function checkPasswords(passwordMinLength, passwordComplexity)
         isSuccess =  false;
     }
 
-    /*
-        DIV: id="username-unique"    ICON: id="icon-username-unique" 
-        DIV: id="passwords-match"    ICON: id="icon-passwords-match" 
-        DIV: id="password-complex"   ICON: id="icon-password-complex"
-        DIV: id="password-status"    ICON: id="icon-password-status" 
-        DIV: id="password1-status"   ICON: id="icon-password1-atatus"
-        DIV: id="password2-status"   ICON: id="icon-password2-status"
-        .switchClass( removeClassName, addClassName [, duration ] [, easing ] [, complete ] )
-        $("#password-status").html("");
-    */
-    
     if(!passwordIsNotEmpty || password1.value.length < passwordMinLength) {
         passwordIsLongEnough = false;
         isSuccess =  false;
@@ -672,7 +553,7 @@ function checkPasswords(passwordMinLength, passwordComplexity)
     changeStatusById("password-complex-not-username", passwordIsNotUserName);
 
     if(!passwordIsNotEmpty && (passwordComplexity != "false" && passwordMinLength > 4)) {
-        if(!checkPassword(password1.value, passwordMinLength)) {
+        if(!checkPasswordComplexity(password1.value, passwordMinLength)) {
             passwordIsValid = false;
             isSuccess = false;
         }

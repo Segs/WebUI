@@ -46,7 +46,7 @@
                                 <div class="list-group">
                                     <div id="username-requirements-unique" class="list-group-item py-0"><i id="icon-username-requirements-unique" class="far fa-square"></i> ...is unique.</div>
                                     <?php if($min_username_len > 1) { ?>
-                                    <div id="username-requirements-length" class="list-group-item py-0"><i id="icon-username-requirements-length" class="far fa-square"></i> ...is longer that <?php echo $min_username_len; ?> characters.</div>
+                                    <div id="username-requirements-length" class="list-group-item py-0"><i id="icon-username-requirements-length" class="far fa-square"></i> ...is equal to or longer than <?php echo $min_username_len; ?> characters.</div>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                                 <div class="list-group">
                                     <div id="password-complex-not-username" class="list-group-item py-0"><i id="icon-password-complex-not-username"  class="far fa-square"></i> ...is not the same as the username.</div>
                                     <?php if($min_password_len > 1) { ?>
-                                    <div id="password-complex-length" class="list-group-item py-0"><i id="icon-password-complex-length" class="far fa-square"></i> ...is longer that <?php echo $min_password_len; ?> characters.</div>
+                                    <div id="password-complex-length" class="list-group-item py-0"><i id="icon-password-complex-length" class="far fa-square"></i> ...is equal to or longer than <?php echo $min_password_len; ?> characters.</div>
                                     <?php } ?>
                                     <?php if($complex_password) { ?>
                                     <div id="password-complex-special" class="list-group-item py-0"><i id="icon-password-complex-special" class="far fa-square"></i> ...meets character requirements.</div>
