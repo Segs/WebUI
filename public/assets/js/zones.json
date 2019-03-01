@@ -1,0 +1,104 @@
+{
+	"cities" : [
+		{
+			"name" : "Outbreak",
+			"index" : 24
+		},
+		{
+			"name" : "Atlas Park",
+			"index" : 1
+		},
+		{
+			"name" : "King's Row",
+			"index" : 5
+		},
+		{
+			"name" : "Galaxy City",
+			"index" : 29
+		},
+		{
+			"name" : "Steel Canyon",
+			"index" : 6
+		},
+		{
+			"name" : "Skyway City",
+			"index" : 7
+		},
+		{
+			"name" : "Talos Island",
+			"index" : 8
+		},
+		{
+			"name" : "Independence Port",
+			"index" : 9
+		},
+		{
+			"name" : "Founders' Falls",
+			"index" : 10
+		},
+		{
+			"name" : "Brickstown",
+			"index" : 11
+		},
+		{
+			"name" : "Peregrine Island",
+			"index" : 61
+		}
+    ],
+    "trials" : [
+		{
+			"name" : "Perez Park",
+			"index" : 12
+		},
+		{
+			"name" : "Boomtown",
+			"index" : 13
+		},
+		{
+			"name" : "Dark Astoria",
+			"index" : 43
+		},
+		{
+			"name" : "Crey's Folly",
+			"index" : 15
+		},
+		{
+			"name" : "Enviro Nightmare",
+			"index" : 50000
+		},
+		{
+			"name" : "Elysium",
+			"index" : 9928
+		}
+    ],
+    "hazards" : [
+		{
+			"name" : "Abandoned Sewer Network",
+			"index" : 18
+		},
+		{
+			"name" : "Sewer Network",
+			"index" : 23
+		},
+		{
+			"name" : "Faultline",
+			"index" : 84
+		},
+		{
+			"name" : "Terra Volta",
+			"index" : 20
+		},
+		{
+			"name" : "Eden",
+			"index" : 21
+		},
+		{
+			"name" : "The Hive",
+			"index" : 22
+		},
+		{
+			"name" : "Rikti Crash Site",
+			"index" : 60
+		}
+    ]
+}

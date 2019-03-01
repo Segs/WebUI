@@ -45,6 +45,11 @@ class DatabaseConnection
         return $this->conn->prepare($statement);
     }
 	
+    public function displayError()
+    {
+        return $this->conn->error;
+    }
+    
 	public function closeConnection() {
 		$this->conn->close();
 	}

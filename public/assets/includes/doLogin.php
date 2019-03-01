@@ -40,7 +40,7 @@
 						$m_result->value = 0;
 						$_SESSION['isAuthenticated'] = true;
 						$_SESSION['username'] = $m_username;
-					} else{
+					} else {
 						$m_result->return_message[] = "<div>We are unable to sign you in with the username '{$m_username}'</div>";
 						$m_result->return_message[] = "<div>Please check your username and password, and try again.</div>";
 					}

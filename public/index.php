@@ -7,10 +7,7 @@
      */
 
     session_start();
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
-    
+
     require_once '../config/config.php';
     if (isset($_GET['page'])):
         $page = $_GET["page"];
@@ -31,7 +28,7 @@
         <title><?php echo $site_title; ?></title>
         <!-- WebUI Base -->
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-        <!-- Fonts and icons       -->
+        <!--    Fonts and icons     -->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
 
         <!-- Font Awesome          -->
@@ -39,10 +36,10 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
         -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-        <!-- CSS Files             -->
-        <link href="assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+        <!-- CSS Files -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.7.0/bootstrap-lightbox.css" integrity="sha256-iSJ+O7SdfdjO7VYs5/SlJm9JWfnJSkqTFjI7xQV3CvE=" crossorigin="anonymous" />
-        <link href="assets/css/segs.css" rel="stylesheet" />
+        <link href="/assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+        <link href="/assets/css/segs.css" rel="stylesheet" />
     </head>
 
     <body class="">
@@ -68,46 +65,38 @@
                 </div>
             </div>
             <div class="main-panel">
-                <!-- Navbar -->
-                <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
-                    <div class="container-fluid">
-                        <div class="navbar-wrapper">
-                            <a class="navbar-brand" href="?page=dashboard">
-                                <?php
-                                    echo $site_navbar_title; 
-                                    if(isset($_SESSION['isAuthenticated']) && isset($_SESSION['username'])) {
-                                        echo " - " . $_SESSION['username']; 
-                                    }
-                                ?>
-                            </a>
-                            <div class="justify-content-end">
-                                <ul class="navbar-nav">
+                <div class="container-fluid d-flex justify-content-between"><!--  -->
+                    <h3><?php echo $site_navbar_title; ?><br>
+                        <?php if(isset($_SESSION['isAuthenticated']) && isset($_SESSION['username'])) { ?>
+                            <span class="badge badge-secondary">
+                                <?php echo  strtoupper($_SESSION['username']); ?>
+                            </span>
+                        <?php } ?>
+                    </h3>
+                     <!-- Navbar -->
+                    <nav class="navbar navbar-transparent">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><!--  -->
                                 <?php if(isset($_SESSION['isAuthenticated'])) { ?>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#logout" onclick="doLogout();">
-                                            <i class="fas fa-sign-out"></i>Log Out
-                                        </a>
-                                    </li>
+                                <a  class="nav-link" role="button" href="#logout" onclick="doLogout();">
+                                   <i class="fas fa-sign-out"></i>Log Out
                                 <?php } else { ?>
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href="#modal-login" data-toggle="modal" data-target="#modal-login">
-                                            <i class="fas fa-sign-in"></i>Login or Sign Up
-                                        </a>
-                                    </li>
+                                <a class="nav-link" href="#modal-login" data-toggle="modal" data-target="#modal-login">
+                                    <i class="fas fa-sign-in"></i>Login or Sign Up
                                 <?php } ?>
-                                </ul>
-                            </div>
-                        </div>
+                               </a>
+                            </li><!--  -->
+                        </ul>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="navbar-toggler-icon icon-bar"></span>
                             <span class="navbar-toggler-icon icon-bar"></span>
                             <span class="navbar-toggler-icon icon-bar"></span>
                         </button>
-                    </div>
-                </nav>
-                <!-- End Navbar -->
-                <div class="content">
+                    </nav>
+                    <!-- End Navbar -->
+                </div>
+                <div class="content segs-content">
                     <div id="main-content">
                         <?php include "assets/views/{$page}.php"; ?>
                     </div>

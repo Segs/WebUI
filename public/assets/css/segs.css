@@ -5,7 +5,7 @@
  * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
  */
 
-.image_map{
+.image_map {
     fill: #0000ff;
     fill-opacity: 0.1;
     stroke: #3f3fff;
@@ -13,7 +13,7 @@
     stroke-opacity: .5;
 }
 
-.image_map:hover{
+.image_map:hover {
     fill: #00ff00;
     fill-opacity: 0.2;
     stroke: #3fff3f;
@@ -21,7 +21,7 @@
     stroke-opacity: 1;
 }
 
-.hazard:hover{
+.hazard:hover {
     fill: #ffff00;
     fill-opacity: 0.2;
     stroke: #ffff3f;
@@ -29,7 +29,7 @@
     stroke-opacity: 1;
 }
 
-.trial:hover{
+.trial:hover {
     fill: #ff0000;
     fill-opacity: 0.2;
     stroke: #ff3f3f;
@@ -37,14 +37,13 @@
     stroke-opacity: 1;
 }
 
-#modal-login, #modal-create
-{
+#modal-login, #modal-create {
     /*
     display: none;
      */
 }
 
-.addScroll{
+.addScroll {
     overflow-y: auto;
     overflow-x: none;
     height: 90vh;
@@ -55,35 +54,34 @@
 
 .card .card-header-dark .card-icon, .card .card-header-dark .card-text,
 .card .card-header-dark:not(.card-header-icon):not(.card-header-text), .card.bg-dark,
-.card.card-rotate.bg-dark .front, .card.card-rotate.bg-dark .back
-{
+.card.card-rotate.bg-dark .front, .card.card-rotate.bg-dark .back {
     background: linear-gradient(60deg, #282828, #1a1a1a);
-}
-
-.sidebar[data-color="dark"] li.active > a
-{
-    background-color: #1a1a1a;
-    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(43, 43, 43, 0.4);
 }
 
 .card .card-header-gold .card-icon, .card .card-header-gold .card-text,
 .card .card-header-gold:not(.card-header-icon):not(.card-header-text), .card.bg-gold,
-.card.card-rotate.bg-gold .front, .card.card-rotate.bg-gold .back
-{
+.card.card-rotate.bg-gold .front, .card.card-rotate.bg-gold .back {
     background: linear-gradient(60deg, #b98a00, #ad8000);
 }
 
-.sidebar[data-color="gold"] li.active > a
-{
+.sidebar[data-color="dark"] li.active > a {
+    background-color: #1a1a1a;
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(43, 43, 43, 0.4);
+}
+
+.sidebar[data-color="gold"] li.active > a {
     background-color: #ad8000;
     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(225, 169, 0, 0.4);
 }
 
-.customLogo
-{
+.customLogo {
     padding: 0px;
     margin: 0px;
     display: block;
     position: relative;
     z-index: 4;
+}
+
+.segs-content {
+    margin-top: 0px !important;
 }

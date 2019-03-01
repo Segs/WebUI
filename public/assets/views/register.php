@@ -1,14 +1,18 @@
 <?php
-require '../vendor/autoload.php';
-require '../config/config.php';
+    /*
+     * SEGS - Super Entity Game Server
+     * http://www.segs.io/
+     * Copyright (c) 2006 - 2018 SEGS Team (see AUTHORS.md)
+     * This software is licensed under the terms of the 3-clause BSD License. See LICENSE.md for details.
+     */
+    require '../vendor/autoload.php';
+    require '../config/config.php';
+    
+    $page_title = "Register";
+    $page_summary = "Fill out the form below to register for a new account.";
+
+    require "partials/page_top.php";
 ?>
-<div class="card">
-    <div class="card-header card-header-<?php echo $site_color; ?>">
-        <h4 class="card-title ">Register</h4>
-        <p class="card-category">Fill out the form below to register for a new account.</p>
-    </div>
-    <div class="card-body">
-        <div class="container">
             <form id="form_register" novalidate="novalidate" method="post" onsubmit="return doSignup();">
                 <div class="row">
                     <div class="col-lg-7 col-md-12">
@@ -63,9 +67,8 @@ require '../config/config.php';
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-        </div>
-    </div>
-</div>
+<?php require_once "partials/page_bottom.php"; ?>
+
 <?php if($warn_pwned_password) { ?>
 <script src="https://cdn.passprotect.io/passprotect.min.js"></script>
 <?php } ?>

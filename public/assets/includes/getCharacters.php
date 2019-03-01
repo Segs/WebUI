@@ -31,29 +31,28 @@
 
     function getCharacters()
     {
-		global $dbhost, $dbuser, $dbpass, $accdb, $chardb, $dbport;
-        $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $chardb, $dbport);
         $result = array();
+		global $dbhost, $dbuser, $dbpass, $accdb, $chardb, $dbport;
+        $databaseConnection = new DatabaseConnection($dbhost, $dbuser, $dbpass, $chardb, $dbport);
 
-        if($mysqli->connect_errno){
-            echo "ERROR " . mysqli_connect_error();
-            return;
-        }
-        if($stmt = $mysqli->prepare("SELECT a.char_name,a.entitydata FROM characters as a " .
-                                    "INNER JOIN " . $accdb . ".accounts as b ON a.account_id = b.id " .
-                                    "WHERE b.username = ?")){
-            $stmt->bind_param('s', $_SESSION['username']);
-            $stmt->execute();
-            $stmt->bind_result($char_name, $entity_data);
-            while($stmt->fetch()){
-                $result[] = json_encode(new ReturnData($char_name, $entity_data));
+        if($databaseConnection) {
+            $statementCharacters = $databaseConnection->prepareStatement("SELECT a.char_name,a.entitydata FROM " .
+                                    "characters AS a INNER JOIN " . $accdb . ".accounts AS b ON a.account_id = b.id " .
+                                    "WHERE b.username = ?");
+            $statementCharacters->bind_param('s', $_SESSION['username']);
+
+            if(!$statementCharacters->execute()) {
+                $result[] = json_encode(new ReturnData("NO DATA", "NO DATA"));
+            } else {
+                $statementCharacters->bind_result($character_name, $entity_data);
+                while($statementCharacters->fetch()){
+                    $result[] = json_encode(new ReturnData($character_name, $entity_data));
+                }
             }
+            $databaseConnection->closeConnection();
         }
-        else{
-            echo "STMTFAIL ";
-        }
+
         echo json_encode($result);
-        $mysqli->close();
     }
 
     getCharacters();
