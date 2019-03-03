@@ -149,74 +149,63 @@ $(function()
 	$($menuItem).addClass('active');
 });
 
+async function fetchZoneList(url)
+{
+    let response = await (await fetch(url)).json();
+    return response;
+}
+
 function cityListPopulate(currentCity)
 {
     var zones = [];
     
-    async function fetchZoneList(url)
-    {
-        let response = await (await fetch(url)).json();
-        return response;
-    }
-    
     request = fetchZoneList('/assets/js/zones.json')
         .then(function(data){
-            zones = data;
+            zones = data.zones;
         })
         .catch(reason => console.log(reason.message));
 
     $.when(request).done(function(data) {
+        var cities = [];
+        var hazards = [];
+        var trials = [];
+        for(var i = 0; i < zones.length; i++){
+            var zone = zones[i];
+            var newZone = {"index": zone.index, "name": zone.name};
+            
+            if (zone.type == "city"){
+                cities.push(newZone);
+            } else if (zone.type == "trial") {
+                trials.push(newZone);
+            } else if (zone.type == "hazard") {
+                hazards.push(newZone);
+            }
+        }
+
         var cs = document.getElementById('zoneSelector');
         cs.innerHTML = "<option disabled>- Cities</option>";
-        for(var j = 0; j < zones.cities.length; j++){
+        for(var j = 0; j < cities.length; j++){
             var citystr = document.createElement('option');
-            citystr.value = zones.cities[j].index;
-            citystr.innerText = zones.cities[j].name;
+            citystr.value = cities[j].index;
+            citystr.innerText = cities[j].name;
             cs.appendChild(citystr);
         }
         cs.innerHTML += "<option disabled>- Hazards</option>";
-        for(var j = 0; j < zones.hazards.length; j++){
+        for(var j = 0; j < hazards.length; j++){
             var citystr = document.createElement('option');
-            citystr.value = zones.hazards[j].index;
-            citystr.innerText = zones.hazards[j].name;
+            citystr.value = hazards[j].index;
+            citystr.innerText = hazards[j].name;
             cs.appendChild(citystr);
         }
         cs.innerHTML += "<option disabled>- Trials</option>";
-        for(var j = 0; j < zones.trials.length; j++){
+        for(var j = 0; j < trials.length; j++){
             let citystr = document.createElement('option');
-            citystr.value = zones.trials[j].index;
-            citystr.innerText = zones.trials[j].name;
+            citystr.value = trials[j].index;
+            citystr.innerText = trials[j].name;
             cs.appendChild(citystr);
         }
         cs.value = currentCity;
     });
-
-    
-/*    
-// // //    var cs = document.getElementById('zoneSelector');
-// // //    cs.innerHTML = "<option disabled>- Cities</option>";
-// // //    for(var j = 0; j < zones.cities.length; j++){
-// // //        var citystr = document.createElement('option');
-// // //        citystr.value = zones.cities[j].index;
-// // //        citystr.innerText = zones.cities[j].name;
-// // //        cs.appendChild(citystr);
-// // //    }
-// // //    cs.innerHTML += "<option disabled>- Hazards</option>";
-// // //    for(var j = 0; j < zones.hazards.length; j++){
-// // //        var citystr = document.createElement('option');
-// // //        citystr.value = zones.hazards[j].index;
-// // //        citystr.innerText = zones.hazards[j];
-// // //        cs.appendChild(citystr);
-// // //    }
-// // //    cs.innerHTML += "<option disabled>- Trials</option>";
-// // //    for(var j = 0; j < zones.trials.length; j++){
-// // //        let citystr = document.createElement('option');
-// // //        citystr.value = zones.trials[j].index;
-// // //        citystr.innerText = zones.trials[j].name;
-// // //        cs.appendChild(citystr);
-// // //    }
-// // //    cs.value = currentCity;
-*/
 }
 
 async function selectCurrentZone(selectObject)
@@ -379,42 +368,69 @@ function moveCharacter()
     var moveForm = document.getElementById('zonemove');
     var selectedCharacter = moveForm.characterSelect;
     var selectedZone = moveForm.zoneSelector;
-    var postBody = {'char' : selectedCharacter.value, 'map' : selectedZone.value};
-    fetch(window.location.origin + "/assets/includes/moveCharacter.php",{
-        method: 'POST',
-        headers:{
-            'charset': 'utf-8',
-            'content-type':'application/json'
-        },
-        body : JSON.stringify(postBody)
-    }).then(function(myBlob){
-        return myBlob.json();
-    }).then(function(results){
-        var return_message = new Array();
-        for (var i = 0, len = results.return_message.length; i < len; i++) {
-            return_message.push(results.return_message[i]);
+    var zones = [];
+    var characterId = selectedCharacter.value;
+    var mapIndex = selectedZone.value;
+    var location = [0,0,0];
+    var orientation = [0,0,0];
+    
+    
+    
+    request = fetchZoneList('/assets/js/zonesByIndex.json')
+        .then(function(data){
+            zones = data.zones;
+        })
+        .catch(reason => console.log(reason.message));
+    
+    
+    $.when(request).done(function(data) {
+        for(var i = 0; i < zones.length; i++){
+            var zone = zones[i];
+            if (zone.index == parseInt(mapIndex)){
+                location = zone.location;
+                orientation = zone.orientation;
+                break;
+            }
         }
-        
-        if(results.value == 0){
-            return_message.push("<div>You have successfully moved " + 
-                selectedCharacter.options[selectedCharacter.selectedIndex].text + " to " + 
-                selectedZone.options[selectedZone.selectedIndex].text + ".</div>");
-        } else {
-            return_message.push("<div>There was an problem moving " + 
-                selectedCharacter.options[selectedCharacter.selectedIndex].text + " to " + 
-                selectedZone.options[selectedZone.selectedIndex].text + ".</div>");
-        }
-        
-        try{
-            $("#modal-result").html(return_message);
-            $("#modal-message").modal('show');
-        } catch(e) {
-            window.location.reload();
-        }
-        
-
+        var postBody = {'character_id' : characterId,
+                        'map_index' : mapIndex,
+                        'location': location,
+                        'orientation': orientation
+                        };
+        fetch(window.location.origin + "/assets/includes/moveCharacter.php",{
+            method: 'POST',
+            headers:{
+                'charset': 'utf-8',
+                'content-type':'application/json'
+            },
+            body : JSON.stringify(postBody)
+        }).then(function(myBlob){
+            return myBlob.json();
+        }).then(function(results){
+            var return_message = new Array();
+            for (var i = 0, len = results.return_message.length; i < len; i++) {
+                return_message.push(results.return_message[i]);
+            }
+            
+            if(results.value == 0){
+                return_message.push("<div>You have successfully moved " + 
+                    selectedCharacter.options[selectedCharacter.selectedIndex].text + " to " + 
+                    selectedZone.options[selectedZone.selectedIndex].text + ".</div>");
+            } else {
+                return_message.push("<div>There was an problem moving " + 
+                    selectedCharacter.options[selectedCharacter.selectedIndex].text + " to " + 
+                    selectedZone.options[selectedZone.selectedIndex].text + ".</div>");
+            }
+            
+            try{
+                $("#modal-result").html(return_message);
+                $("#modal-message").modal('show');
+            } catch(e) {
+                window.location.reload();
+            }
+        });
+        return false;
     });
-    return false;
 }
 
 function checkUsername(usernameMinLength)

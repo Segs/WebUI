@@ -19,7 +19,7 @@
     use Segs\ReturnType;
 	use Segs\DatabaseConnection;
 
-    function moveCharacter($m_username, $m_character_index, $m_map_index, &$m_result)
+    function moveCharacter($m_username, $m_character_index, $m_map_index, $m_location, $m_orientation, &$m_result)
     {
         global $dbhost, $dbuser, $dbpass, $accdb, $chardb, $dbport;
         $m_canContinue = TRUE;
@@ -62,9 +62,9 @@
                     }
                     
                     if (array_key_exists('cereal_class_version', $m_decoded->value0)) {
-                        $m_decoded->value0->Orientation = array(0,0,0);
+                        $m_decoded->value0->Orientation = $m_orientation;
                     }
-                    $m_decoded->value0->Position = array(0,0,0);
+                    $m_decoded->value0->Position = $m_location;
                     $m_decoded->value0->MapIdx = $m_map_index;
                     settype($m_decoded->value0->MapIdx, "integer");
 //                    $m_result->return_message[] = $m_decoded;
@@ -113,11 +113,15 @@
     $decoded = json_decode($content, true);
     $result = new ReturnType();
     
-    $character_index = $decoded['char'];
-    $map_index = $decoded['map'];
+    $character_index = $decoded['character_id'];
+    $map_index = $decoded['map_index'];
+    $location = $decoded['location'];
+    $orientation = $decoded['orientation'];
     
     $result->return_message[] = "<div>Character Index: {$character_index}</div>";
     $result->return_message[] = "<div>Map Index: {$map_index}</div>";
+    $result->return_message[] = "<div>Location: [" . implode(", ", $location) . "]</div>";
+    $result->return_message[] = "<div>Orientation: [" . implode(", ", $orientation) . "]</div>";
     // $character_index = 0;
     // $map_index = rand(0,10);
     // $map_index = 0;
@@ -131,7 +135,7 @@
         $result->return_message[] = "<div>No data returned.</div>";
         $result->value = 1;
     } else {
-        moveCharacter($user_name, $character_index, $map_index, $result);
+        moveCharacter($user_name, $character_index, $map_index, $location, $orientation, $result);
         $result->value = 0;
     }
 
