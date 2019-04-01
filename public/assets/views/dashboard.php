@@ -12,62 +12,62 @@
 
     use Segs\DateTime;
 
-    $ws_target = 'wss://segs.aruin.com';
-    #$request = Tivoka\Client::request('getStartTime');
-    #$request = $client->sendRequest('ping');
-
     // Set default statuses
     $server_status = "OFFLINE";
     $server_status_color = "danger";
     $server_uptime = "NO DATA";
     $server_uptime_color = "danger";
-    $server_version = "NO DATA";
-    $server_version_color = "danger";
+    $server_version_number = "NO DATA";
+    $server_version_number_color = "danger";
+    $server_version_name = "NO DATA";
+    
+    // Create websocket URL
+    if($ws_use_ssl){
+        $ws_target_protocol = "wss://";
+    } else {
+        $ws_target_protocol = "ws://";
+    }
+    $target = "{$ws_target_protocol}{$ws_target_addr}:{$ws_target_port}";
 
-    try
-    {
-        $client = Tivoka\Client::connect($ws_target)->getNativeInterface();
-        try
-        {
+    try {
+        $client = Tivoka\Client::connect($target)->getNativeInterface();
+        try {
             // verify server online
             $client->ping();
             $server_online = $client->last_request->result;
             $server_status = "ONLINE";
             $server_status_color = "success";
-            // get server version
-            try
-            {
+            // get server version number
+            try {
                 $client->getVersion();
-                $server_version = $client->last_request->result;
-                $server_version_color = "success";
+                $server_version_number = $client->last_request->result;
+                $server_version_number_color = "success";
+            } catch(Exception $e) {
+                $server_version_number = "NO DATA";
+                $server_version_number_color = "danger";
             }
-            catch(Exception $e)
-            {
-                $server_version = "NO DATA";
-                $server_version_color = "danger";
+            // get server version name
+            try {
+                $client->getVersionName();
+                $server_version_name = $client->last_request->result;
+            } catch(Exception $e) {
+                $server_version_name = "NO DATA";
             }
             // get server start time
-            try
-            {
+            try {
                 $dt = new DateTime($timezone);
                 $client->getStartTime();
                 $server_uptime = (int)$client->last_request->result;
                 $server_uptime = $dt->dateDiff(time(), $server_uptime,6,1);
                 $server_uptime_color = "success";
-            }
-            catch(Exception $e)
-            {
+            } catch(Exception $e) {
                 $server_uptime = "NO DATA";
                 $server_uptime_color = "danger";
             }
-        }
-        catch(Exception $e)
-        {
+        } catch(Exception $e) {
             // TODO: Handle error, as well as notify user and/or log.
         }
-    }
-    catch(Exception $e)
-    {
+    } catch(Exception $e) {
         // TODO: Handle error, as well as notify user and/or log.
     }
     
@@ -103,10 +103,10 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card card-stats">
-                        <div class="card-header card-header-<?php echo $server_version_color; ?> card-header-icon">
+                        <div class="card-header card-header-<?php echo $server_version_number_color; ?> card-header-icon">
                             <div class="card-icon"><i class="fa fa-code"></i></div>
                             <p class="card-category">Server Version</p>
-                            <h4 class="card-title"><?php echo $server_version; ?></h4>
+                            <h4 class="card-title"><?php echo "{$server_version_number} \"{$server_version_name}\""; ?></h4>
                         </div>
                         <div class="card-footer">
                             <div class="stats"><i class="material-icons">update</i>Updated <?php echo date("Y-m-d h:i:s a") ?></div>
