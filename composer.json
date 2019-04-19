@@ -1,0 +1,10 @@
+{
+    "require": {
+        "tivoka/tivoka": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Segs\\": "src/Segs"
+        }
+    }
+}

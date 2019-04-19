@@ -1,0 +1,5 @@
+composer.lock
+config/config.php
+vendor/
+.idea/
+public/assets/includes/test.php

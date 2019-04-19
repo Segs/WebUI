@@ -1,0 +1,364 @@
+{
+	"zones" : [
+		{
+			"index" : 24,
+			"name" : "Outbreak",
+            "type" : "city",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 1,
+			"name" : "Atlas Park",
+            "type" : "city",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 5,
+			"name" : "King's Row",
+            "type" : "city",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 29,
+			"name" : "Galaxy City",
+            "type" : "city",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 6,
+			"name" : "Steel Canyon",
+            "type" : "city",
+            "location" : [
+                -3481.4,
+                0,
+                -2984.8
+            ],
+            "orientation" : [
+                0,
+                -1.57,
+                0
+            ]
+		},
+		{
+			"index" : 7,
+			"name" : "Skyway City",
+            "type" : "city",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 8,
+			"name" : "Talos Island",
+            "type" : "city",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 9,
+			"name" : "Independence Port",
+            "type" : "city",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 10,
+			"name" : "Founders' Falls",
+            "type" : "city",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 11,
+			"name" : "Brickstown",
+            "type" : "city",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 61,
+			"name" : "Peregrine Island",
+            "type" : "city",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"name" : "Perez Park",
+			"index" : 12,
+            "type" : "trial",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 13,
+			"name" : "Boomtown",
+            "type" : "trial",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 43,
+			"name" : "Dark Astoria",
+            "type" : "trial",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 15,
+			"name" : "Crey's Folly",
+            "type" : "trial",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 50000,
+			"name" : "Enviro Nightmare",
+            "type" : "trial",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 9928,
+			"name" : "Elysium",
+            "type" : "trial",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 18,
+			"name" : "Abandoned Sewer Network",
+            "type" : "hazard",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 23,
+			"name" : "Sewer Network",
+            "type" : "hazard",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 84,
+			"name" : "Faultline",
+            "type" : "hazard",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 20,
+			"name" : "Terra Volta",
+            "type" : "hazard",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 21,
+			"name" : "Eden",
+            "type" : "hazard",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 22,
+			"name" : "The Hive",
+            "type" : "hazard",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		},
+		{
+			"index" : 60,
+			"name" : "Rikti Crash Site",
+            "type" : "hazard",
+            "location" : [
+                0,
+                0,
+                0
+            ],
+            "orientation" : [
+                0,
+                0,
+                0
+            ]
+		}
+    ]
+}
