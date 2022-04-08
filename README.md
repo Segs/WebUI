@@ -1,5 +1,7 @@
 # Segs WebUI
 
+Note: this project is in a holding pattern, waiting for a maintainer.
+
 ## Introduction
 
 This is the start of a Web-UI for [SEGS (Super Entity Game Server)](https://segs.io).
