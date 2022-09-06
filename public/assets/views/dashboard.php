@@ -27,7 +27,7 @@
     } else {
         $ws_target_protocol = "ws://";
     }
-    $target = "{$ws_target_protocol}{$ws_target_addr}:{$ws_target_port}";
+    $target = "{$ws_target_protocol}{$ws_target}:{$ws_port}";
 
     try {
         $client = Tivoka\Client::connect($target)->getNativeInterface();
