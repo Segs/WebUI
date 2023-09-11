@@ -107,7 +107,7 @@
                             <?php include_once 'assets/includes/menuFooter.php'; ?>
                         </nav>
                         <div class="copyright float-right">
-                            &copy; <?php echo strftime("%Y"); ?> <a href="https://segs.io" target="_blank">SEGS</a>, with help from <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>.
+                            &copy; <?php echo date("Y"); ?> <a href="https://segs.io" target="_blank">SEGS</a>, with help from <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>.
                         </div>
                     </div>
                 </footer>
