@@ -9,7 +9,7 @@
     // Site Settings
     $site_title                 = "SEGS";
     $site_name                  = "SEGS";
-    $site_url                   = "//segs.io";
+    $site_url                   = "//segs.dev";
     $site_logo                  = "//github.com/Segs/Segs/raw/develop/docs/segs-medallion-med.png";
     $site_admin                 = "webmaster@example.com";
     /*
