@@ -35,7 +35,7 @@
     $warn_pwned_password        = true;
     
     // WebSocket connection
-    $ws_target                  = "localhost/";
+    $ws_target                  = "localhost";
     $ws_port                    = 6001;
     $ws_use_ssl                 = false;
 
