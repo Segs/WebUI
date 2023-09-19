@@ -25,6 +25,7 @@
     $dbpass                     = "segs123";
     $accdb                      = "segs";
     $chardb                     = "segs_game";
+    $dbport                     = 3306;
 
     // User Account Settings;
     $min_username_len           = 6;
@@ -34,7 +35,7 @@
     $warn_pwned_password        = true;
     
     // WebSocket connection
-    $ws_target                  = "ws://localhost/";
+    $ws_target                  = "localhost/";
     $ws_port                    = 6001;
     $ws_use_ssl                 = false;
 
