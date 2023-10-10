@@ -46,4 +46,4 @@ database traffic and slow refresh to that page.
 
 _"The journey of a thousand miles, begins with but a single step."_
 
-&copy; 2006 - 2019 SEGS Team
+&copy; 2006 - 2023 SEGS Team
