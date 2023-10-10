@@ -1,5 +1,7 @@
-# Segs WebUI
+<img src="SEGS WebUI.png" align="right" alt="SEGS Logo" height=50% width=50%> 
 
+Segs WebUI
+=====
 Note: this project is in a holding pattern, waiting for a maintainer.
 
 ## Introduction
