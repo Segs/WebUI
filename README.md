@@ -30,6 +30,8 @@ using composer, visit https://getcomposer.org.
 For initial configuration, copy the file `config/example_config.php` to `config/config.php` and edit
 any necessary settings.
 
+A list of timezones can be found here: [PHP List of Supported Timezones](https://www.php.net/manual/en/timezones.php)
+
 ## Known Issues
 
 Many, many, **many** issues. Among them:
