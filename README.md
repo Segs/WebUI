@@ -1,7 +1,6 @@
-<img src="SEGS WebUI.png" align="right" alt="SEGS Logo" height=50% width=50%> 
+<img width="497" height="324" alt="SEGS WebUI" src="https://github.com/user-attachments/assets/b26e7c4f-7d11-4cec-af1d-3d5c29bbeadf" />
 
-Segs WebUI
-=====
+
 Note: this project is in a holding pattern, waiting for a maintainer.
 
 ## Introduction
